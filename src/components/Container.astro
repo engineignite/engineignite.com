@@ -1,0 +1,14 @@
+---
+interface Props {
+  class?: string
+  /** `prose` narrows the column for reading; `wide` fits a docs sidebar. */
+  width?: 'default' | 'prose' | 'wide'
+}
+
+const { class: className = '', width = 'default' } = Astro.props
+const max = { prose: 'max-w-3xl', wide: 'max-w-6xl', default: 'max-w-5xl' }[width]
+---
+
+<div class:list={['mx-auto w-full px-5 sm:px-8', max, className]}>
+  <slot />
+</div>

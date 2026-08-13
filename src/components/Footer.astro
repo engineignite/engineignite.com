@@ -1,0 +1,25 @@
+---
+import Container from '@/components/Container.astro'
+import { getLegal, LEGAL_LABELS } from '@/lib/content'
+import { SITE } from '@/site.config'
+
+const siteLegal = await getLegal('site')
+const year = new Date().getFullYear()
+---
+
+<footer class="mt-24 border-t border-border py-10 text-sm text-muted">
+  <Container class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <p>&copy; {year} {SITE.legalEntity}</p>
+
+    <nav class="flex flex-wrap items-center gap-x-5 gap-y-2" aria-label="Footer">
+      <a class="transition-colors hover:text-fg" href={`mailto:${SITE.email}`}>Contact</a>
+      {siteLegal.map((entry) => (
+        <a class="transition-colors hover:text-fg" href={`/legal/${entry.data.kind}`}>
+          {LEGAL_LABELS[entry.data.kind]}
+        </a>
+      ))}
+      <a class="transition-colors hover:text-fg" href={SITE.social.github}>GitHub</a>
+      <a class="transition-colors hover:text-fg" href="/rss.xml">RSS</a>
+    </nav>
+  </Container>
+</footer>

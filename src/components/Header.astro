@@ -1,0 +1,41 @@
+---
+import Container from '@/components/Container.astro'
+import ThemeToggle from '@/components/ThemeToggle.astro'
+import { getDocumentedProjects } from '@/lib/content'
+import { SITE } from '@/site.config'
+
+const path = Astro.url.pathname.replace(/\/+$/, '') || '/'
+const hasDocs = (await getDocumentedProjects()).length > 0
+
+const links = [
+  { label: 'Projects', href: '/projects' },
+  ...(hasDocs ? [{ label: 'Docs', href: '/docs' }] : []),
+]
+---
+
+<header class="sticky top-0 z-20 border-b border-border bg-bg/85 backdrop-blur">
+  <Container class="flex h-16 items-center justify-between gap-4">
+    <a href="/" class="flex items-center gap-2 font-semibold tracking-tight text-fg">
+      <svg class="size-5 text-accent" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M13.5 2 5 13.2h5.2L9.4 22 19 10.3h-5.6L13.5 2Z"></path>
+      </svg>
+      {SITE.name}
+    </a>
+
+    <nav class="flex items-center gap-1 text-sm" aria-label="Main">
+      {links.map((link) => (
+        <a
+          href={link.href}
+          class:list={[
+            'rounded-md px-3 py-2 transition-colors hover:text-fg',
+            path === link.href || path.startsWith(`${link.href}/`) ? 'text-fg' : 'text-muted',
+          ]}
+          aria-current={path === link.href ? 'page' : undefined}
+        >
+          {link.label}
+        </a>
+      ))}
+      <ThemeToggle />
+    </nav>
+  </Container>
+</header>

@@ -1,0 +1,46 @@
+---
+import Container from '@/components/Container.astro'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+
+interface Props {
+  title: string
+  description?: string
+  ogImage?: string
+  noindex?: boolean
+  updated?: Date | undefined
+  /** Small line above the title, e.g. the project name. */
+  eyebrow?: string
+  /** Rendered under the title. */
+  lede?: string
+}
+
+const { eyebrow, lede, updated, ...head } = Astro.props
+---
+
+<BaseLayout {...head} updated={updated} type="article">
+  <Container width="prose">
+    <header class="mb-10 border-b border-border pb-8">
+      {eyebrow && (
+        <p class="mb-2 text-sm font-medium tracking-wide text-accent-strong uppercase">
+          {eyebrow}
+        </p>
+      )}
+      <h1 class="text-3xl font-semibold tracking-tight text-balance text-fg sm:text-4xl">
+        {head.title}
+      </h1>
+      {lede && <p class="mt-4 text-lg text-muted">{lede}</p>}
+      {updated && (
+        <p class="mt-4 text-sm text-muted">
+          Last updated{' '}
+          <time datetime={updated.toISOString()}>
+            {updated.toLocaleDateString('en-US', { dateStyle: 'long', timeZone: 'UTC' })}
+          </time>
+        </p>
+      )}
+    </header>
+
+    <div class="prose max-w-none">
+      <slot />
+    </div>
+  </Container>
+</BaseLayout>

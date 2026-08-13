@@ -1,0 +1,66 @@
+# --- Build output -------------------------------------------------------
+dist/
+dist-preview/
+.astro/
+.output/
+.vercel/
+.netlify/
+
+# --- Dependencies & caches ----------------------------------------------
+node_modules/
+.cache/
+.turbo/
+*.tsbuildinfo
+.lighthouseci/
+
+# --- Env & secrets ------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.mobileprovision
+
+# --- Logs ---------------------------------------------------------------
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+bun-debug.log*
+
+# --- Editor scratch -----------------------------------------------------
+*.swp
+*.swo
+*~
+.idea/
+# Shared VS Code config is committed on purpose; only personal settings are ignored.
+.vscode/settings.local.json
+.history/
+
+# --- OS cruft -----------------------------------------------------------
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+.AppleDouble
+.LSOverride
+.fseventsd
+.VolumeIcon.icns
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+# Linux
+.directory
+.Trash-*
+.nfs*
+
+# --- Scratch ------------------------------------------------------------
+scratch/
+tmp/

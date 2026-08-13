@@ -1,0 +1,78 @@
+# Tool versions + tasks. One source of truth for local dev and CI.
+# `mise install` to get the tools, `mise tasks` to list what you can run.
+
+[tools]
+bun = "1"
+node = "24" # Astro requires Node >= 22.12; also the fallback runtime for the Astro CLI
+dprint = "latest" # formatting (astro/ts/css/md/json/toml/yaml)
+prek = "latest" # git hooks (reads .pre-commit-config.yaml)
+gitleaks = "latest"
+
+[env]
+ASTRO_TELEMETRY_DISABLED = "1"
+
+# Bun installs; the Astro CLI runs on Node (its supported runtime, and the one CI uses).
+[tasks.install]
+description = "Install JS dependencies with Bun"
+run = "bun install"
+
+[tasks.dev]
+description = "Run the Astro dev server (drafts and unpublished docs are visible)"
+depends = ["install"]
+run = "node ./node_modules/.bin/astro dev"
+
+[tasks.build]
+description = "Build the production site into dist/ (drafts and unpublished docs excluded)"
+depends = ["install"]
+run = "node ./node_modules/.bin/astro build"
+
+[tasks."build:preview"]
+description = "Build everything including drafts/unpublished docs (noindex) — proves draft templates still compile"
+depends = ["install"]
+env = { PREVIEW_DRAFTS = "1" }
+run = "node ./node_modules/.bin/astro build --outDir dist-preview"
+
+[tasks.preview]
+description = "Serve the built dist/ locally"
+depends = ["install"]
+run = "node ./node_modules/.bin/astro preview"
+
+[tasks.typecheck]
+description = "Type-check .astro/.ts with astro check (read-only)"
+depends = ["install"]
+run = "node ./node_modules/.bin/astro check"
+
+[tasks.lint]
+description = "Lint .ts/.js with oxlint (read-only)"
+depends = ["install"]
+run = "./node_modules/.bin/oxlint --max-warnings 0"
+
+[tasks.lint-fix]
+description = "Autofix what oxlint can fix"
+depends = ["install"]
+run = "./node_modules/.bin/oxlint --fix"
+
+[tasks.fmt]
+description = "Autofix formatting with dprint"
+run = "dprint fmt"
+
+[tasks.fmt-check]
+description = "Check formatting (no writes)"
+run = "dprint check"
+
+[tasks.fix]
+description = "Autofix everything fixable: oxlint --fix then dprint fmt"
+depends = ["lint-fix"]
+run = "dprint fmt"
+
+[tasks."scan-secrets"]
+description = "Scan the working tree for committed secrets"
+run = "gitleaks dir . --no-banner --redact"
+
+[tasks.check]
+description = "Everything CI runs: format, lint, types, secrets, build"
+depends = ["fmt-check", "lint", "typecheck", "scan-secrets", "build"]
+
+[tasks.clean]
+description = "Remove build output and caches"
+run = "rm -rf dist dist-preview .astro .lighthouseci"

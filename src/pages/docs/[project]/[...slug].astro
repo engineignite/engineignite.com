@@ -1,0 +1,32 @@
+---
+import DocsLayout from '@/layouts/DocsLayout.astro'
+import { docProject, docSlug, getDocs, getProjects, previewDrafts } from '@/lib/content'
+import type { GetStaticPaths } from 'astro'
+import { render } from 'astro:content'
+
+export const getStaticPaths = (async () => {
+  const projects = await getProjects()
+  const docs = await getDocs()
+
+  return docs.flatMap((entry) => {
+    const project = projects.find((candidate) => candidate.id === docProject(entry))
+    if (!project) return []
+
+    const siblings = docs.filter((candidate) => docProject(candidate) === project.id)
+    return [{
+      params: { project: project.id, slug: docSlug(entry) },
+      props: { entry, project, docs: siblings },
+    }]
+  })
+}) satisfies GetStaticPaths
+
+const { entry, project, docs } = Astro.props
+const { Content } = await render(entry)
+
+// Anything only visible because we are previewing drafts stays out of search.
+const noindex = previewDrafts && (entry.data.draft || !project.data.docsPublished)
+---
+
+<DocsLayout project={project} docs={docs} entry={entry} noindex={noindex}>
+  <Content />
+</DocsLayout>

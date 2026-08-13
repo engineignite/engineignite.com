@@ -1,0 +1,104 @@
+---
+import Badge from '@/components/Badge.astro'
+import Container from '@/components/Container.astro'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import {
+  docProject,
+  getDocs,
+  getLegal,
+  getProjects,
+  LEGAL_LABELS,
+  PLATFORM_LABELS,
+  STATUS_LABELS,
+} from '@/lib/content'
+import type { GetStaticPaths } from 'astro'
+import { render } from 'astro:content'
+
+export const getStaticPaths = (async () => {
+  const projects = await getProjects()
+  return projects.map((project) => ({ params: { project: project.id }, props: { project } }))
+}) satisfies GetStaticPaths
+
+const { project } = Astro.props
+const { title, tagline, description, status, platforms, appStoreUrl, siteUrl, repoUrl, draft } =
+  project.data
+
+const { Content } = await render(project)
+const legal = await getLegal(project.id)
+const docs = (await getDocs()).filter((entry) => docProject(entry) === project.id)
+
+const links = [
+  appStoreUrl && { label: 'App Store', href: appStoreUrl },
+  siteUrl && { label: 'Website', href: siteUrl },
+  repoUrl && { label: 'Source', href: repoUrl },
+].filter((link): link is { label: string; href: string } => Boolean(link))
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  ogImage={`/og/projects/${project.id}.png`}
+  noindex={draft}
+  updated={project.data.updated}
+>
+  <Container>
+    <div class="flex flex-wrap items-center gap-2">
+      <Badge tone={status === 'live' ? 'accent' : 'neutral'}>{STATUS_LABELS[status]}</Badge>
+      {platforms.map((platform) => <Badge>{PLATFORM_LABELS[platform]}</Badge>)}
+      {draft && <Badge>Unpublished draft</Badge>}
+    </div>
+
+    <h1 class="mt-4 text-3xl font-semibold tracking-tight text-balance text-fg sm:text-4xl">
+      {title}
+    </h1>
+    <p class="mt-4 max-w-2xl text-lg text-muted">{tagline}</p>
+
+    {links.length > 0 && (
+      <div class="mt-6 flex flex-wrap gap-3">
+        {links.map((link) => (
+          <a
+            href={link.href}
+            class="rounded-md border border-border px-4 py-2 text-sm font-medium text-fg transition-colors hover:bg-surface-muted"
+          >
+            {link.label}
+          </a>
+        ))}
+      </div>
+    )}
+
+    <div class="prose mt-10 max-w-none">
+      <Content />
+    </div>
+
+    <section class="mt-12 border-t border-border pt-8" aria-labelledby="project-links-heading">
+      <h2 id="project-links-heading" class="text-sm font-medium tracking-wide text-muted uppercase">
+        Support &amp; legal
+      </h2>
+
+      {legal.length > 0
+        ? (
+          <ul class="mt-4 flex flex-col gap-2">
+            {legal.map((entry) => (
+              <li>
+                <a
+                  class="text-accent-strong underline underline-offset-4"
+                  href={`/projects/${project.id}/${entry.data.kind}`}
+                >
+                  {LEGAL_LABELS[entry.data.kind]}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+        : <p class="mt-4 text-muted">No support or legal pages have been published yet.</p>}
+
+      {docs.length > 0 && (
+        <p class="mt-6">
+          <a class="text-accent-strong underline underline-offset-4" href={`/docs/${docs[0]!.id}`}>
+            Read the documentation
+          </a>
+        </p>
+      )}
+    </section>
+  </Container>
+</BaseLayout>

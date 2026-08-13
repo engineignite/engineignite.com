@@ -1,0 +1,65 @@
+---
+import Container from '@/components/Container.astro'
+import ProjectCard from '@/components/ProjectCard.astro'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import { getProjects } from '@/lib/content'
+import { SITE } from '@/site.config'
+
+const projects = await getProjects()
+---
+
+<BaseLayout title={SITE.name}>
+  <Container>
+    <section class="py-10 sm:py-16">
+      <h1 class="max-w-3xl text-4xl font-semibold tracking-tight text-balance text-fg sm:text-6xl">
+        {SITE.tagline}
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg text-muted">{SITE.description}</p>
+
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a
+          href="/projects"
+          class="rounded-md bg-accent px-4 py-2 font-medium text-accent-fg transition-colors hover:bg-accent-strong"
+        >
+          See the projects
+        </a>
+        <a
+          href="#support"
+          class="rounded-md border border-border px-4 py-2 font-medium text-fg transition-colors hover:bg-surface-muted"
+        >
+          Get support
+        </a>
+      </div>
+    </section>
+
+    <section class="border-t border-border py-12" aria-labelledby="projects-heading">
+      <h2 id="projects-heading" class="text-sm font-medium tracking-wide text-muted uppercase">
+        Projects
+      </h2>
+
+      {projects.length > 0
+        ? (
+          <div class="mt-6 grid gap-4 sm:grid-cols-2">
+            {projects.map((project) => <ProjectCard project={project} />)}
+          </div>
+        )
+        : (
+          <p class="mt-6 max-w-2xl text-muted">
+            Nothing published yet. Project pages, support, and documentation will land here.
+          </p>
+        )}
+    </section>
+
+    <section class="border-t border-border py-12" aria-labelledby="support-heading" id="support">
+      <h2 id="support-heading" class="text-sm font-medium tracking-wide text-muted uppercase">
+        Support
+      </h2>
+      <p class="mt-6 max-w-2xl text-muted">
+        Questions, bug reports, or account and data requests for any {SITE.name} app: email{' '}
+        <a class="text-accent-strong underline underline-offset-4" href={`mailto:${SITE.email}`}>
+          {SITE.email}
+        </a>. Each app also has its own support page linked from its project page.
+      </p>
+    </section>
+  </Container>
+</BaseLayout>

@@ -1,0 +1,46 @@
+---
+import { type Doc, groupDocs, type Project } from '@/lib/content'
+
+interface Props {
+  project: Project
+  docs: Doc[]
+  currentId: string
+}
+
+const { project, docs, currentId } = Astro.props
+const groups = groupDocs(docs)
+---
+
+<nav class="text-sm" aria-label={`${project.data.title} documentation`}>
+  <p class="mb-4 font-semibold tracking-tight text-fg">{project.data.title} docs</p>
+
+  <div class="flex flex-col gap-6">
+    {groups.map((group) => (
+      <div>
+        {group.section && (
+          <p class="mb-2 text-xs font-medium tracking-wide text-muted uppercase">
+            {group.section}
+          </p>
+        )}
+        <ul class="flex flex-col gap-1 border-l border-border">
+          {group.entries.map((entry) => (
+            <li>
+              <a
+                href={`/docs/${entry.id}`}
+                class:list={[
+                  '-ml-px block border-l py-1 pl-4 transition-colors hover:text-fg',
+                  entry.id === currentId
+                    ? 'border-accent font-medium text-fg'
+                    : 'border-transparent text-muted',
+                ]}
+                aria-current={entry.id === currentId ? 'page' : undefined}
+              >
+                {entry.data.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+</nav>
