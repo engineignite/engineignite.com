@@ -10,6 +10,10 @@ const previewDrafts = process.env['PREVIEW_DRAFTS'] === '1'
 export default defineConfig({
   site: SITE.url,
   trailingSlash: 'never',
+  // GitHub Pages redirects /path to /path/ when the build emits directory
+  // indexes, which contradicts trailingSlash and the canonical tags. Emitting
+  // path.html instead serves the canonical URL directly, with no redirect hop.
+  build: { format: 'file' },
   prefetch: { prefetchAll: true, defaultStrategy: 'hover' },
   integrations: [
     mdx(),
