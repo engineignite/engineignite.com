@@ -48,7 +48,10 @@ Adopt the Modernist system across every template, not only the landing page.
   system documents for chrome and large text, but not AA for the 15px button labels the design
   specifies. The Lighthouse accessibility gate is therefore 0.9, not 1.0. Repainting the primary
   button is a designer decision, not ours — this is the open item to take back to them.
-- The brand mark ships as the supplied PNG. An SVG is needed before launch; the PNG will not hold
-  up at the 44px nav bezel on retina, and the favicon is the same file.
+- The brand mark ships as vector, in the designer's two variants: `ei_logo_on_light.svg` and
+  `ei_logo_on_dark.svg`. The nav renders whichever matches the active theme. `favicon.svg` carries
+  both ink values behind a `prefers-color-scheme` rule so one file serves both, and the red is left
+  exactly as supplied. Note the mark's red is `#D61A1A`, not the system accent `#ec3013` — the
+  handoff says not to recolor the mark, so it keeps its own red.
 - Two self-hosted fonts cost roughly 56 KB, paid once and cached. The alternative, a Google Fonts
   CDN request, is render-blocking and third-party.

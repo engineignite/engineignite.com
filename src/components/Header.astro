@@ -22,7 +22,20 @@ links.push({ label: 'Contact', href: SITE.cta.href })
   <div class="mx-auto flex w-full max-w-[1200px] flex-wrap items-center gap-x-8 gap-y-3 px-5 py-3.5 sm:px-8">
     <a href="/" class="mr-auto flex items-center gap-3.5" aria-label={`${SITE.name} home`}>
       <span class="tile grid size-11 place-items-center">
-        <img src="/engine-ignite-mark.png" alt="" width="28" height="28" class="size-7" />
+        <img
+          src="/ei_logo_on_light.svg"
+          alt=""
+          width="28"
+          height="28"
+          class="size-7 dark:hidden"
+        />
+        <img
+          src="/ei_logo_on_dark.svg"
+          alt=""
+          width="28"
+          height="28"
+          class="hidden size-7 dark:block"
+        />
       </span>
       <span class="mono-label text-ink/60 hidden sm:block">{SITE.model}</span>
     </a>

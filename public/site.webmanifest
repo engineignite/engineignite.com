@@ -7,9 +7,9 @@
   "theme_color": "#ec3013",
   "icons": [
     {
-      "src": "/engine-ignite-mark.png",
-      "sizes": "1006x1006",
-      "type": "image/png",
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
       "purpose": "any"
     },
     {

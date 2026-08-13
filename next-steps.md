@@ -75,8 +75,8 @@ The landing page now carries the handoff's copy. Three things need your confirma
   placeholders. So is `SLOTS Q3 · 2 OPEN` in the status readout.
 - **Mailbox.** Everything — CTAs, the footer, app support pages — points at
   `go@engineignite.com`. Confirm it exists and is monitored.
-- **Brand mark.** `public/engine-ignite-mark.png` is the supplied PNG, and it is also the favicon.
-  Get an SVG from the designer — the PNG will not hold up at the 44px nav bezel on retina.
+- **Brand mark.** Done — `ei_logo_on_light.svg` and `ei_logo_on_dark.svg` are in `public/`, the
+  nav swaps them by theme, and `favicon.svg` follows the OS theme.
 
 One item to take back to the designer: the accent `#ec3013` behind `#f3f2f2` button labels
 measures **3.79:1**. That clears the 3:1 the design system documents for chrome, but not WCAG AA
