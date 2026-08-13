@@ -16,7 +16,7 @@ export const SITE = {
    * for its own support page with `supportEmail` in its frontmatter. */
   email: 'go@engineignite.com',
   /** Mono model label in the nav bar, per the design. */
-  model: 'Model EI—01',
+  model: 'Model EI-01',
   locale: 'en',
   legalEntity: 'Engine Ignite',
   social: {

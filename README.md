@@ -8,7 +8,7 @@ Pages by GitHub Actions.
 
 ```bash
 mise trust && mise install   # pinned tools: bun, node, dprint, prek, gitleaks
-mise run dev                 # http://localhost:4321 — drafts and unpublished docs visible
+mise run dev                 # http://localhost:4321, with drafts visible
 prek install                 # format/lint on every commit
 ```
 
@@ -18,15 +18,15 @@ prek install                 # format/lint on every commit
 | `mise run build`         | Production build into `dist/`. Drafts and unpublished docs omitted. |
 | `mise run build:preview` | Builds *everything* into `dist-preview/`, marked `noindex`.         |
 | `mise run preview`       | Serve the last production build.                                    |
-| `mise run check`         | Format, lint, types, secret scan, build — what CI runs.             |
+| `mise run check`         | Format, lint, types, secret scan, build. This is what CI runs.      |
 | `mise run fix`           | Autofix: `oxlint --fix` then `dprint fmt`.                          |
 
 ## What's published, and what isn't
 
 Content is visible in `dev` long before it is public. Production only builds an entry when:
 
-- **Projects** — `draft: false` in `src/content/projects/<slug>.md`.
-- **Docs** — the project has `docsPublished: true` **and** the page has `draft: false`. Support and
+- **Projects**: `draft: false` in `src/content/projects/<slug>.md`.
+- **Docs**: the project has `docsPublished: true` **and** the page has `draft: false`. Support and
   privacy pages are docs pages like any other, so they publish the same way.
 
 Today every sample entry is a draft, so production ships the landing page, the (empty)
@@ -40,15 +40,15 @@ are exercised on every CI run by `mise run build:preview`.
    frontmatter. The slug is the URL: `/projects/<slug>`.
 2. Copy `src/content/docs/articulation-drills/` to `src/content/docs/<slug>/` and write at least
    the support and privacy pages. These are the URLs App Store Connect asks for:
-   - Support URL — `https://engineignite.com/docs/<slug>/support`
-   - Privacy Policy URL — `https://engineignite.com/docs/<slug>/privacy`
+   - Support URL: `https://engineignite.com/docs/<slug>/support`
+   - Privacy Policy URL: `https://engineignite.com/docs/<slug>/privacy`
 
    No terms page unless the app actually needs its own: Apple's standard EULA covers a normal app,
    and a custom one is only required for auto-renewable subscriptions.
 3. Set `draft: false` on the project, `docsPublished: true` on it, and `draft: false` on each page
    that is ready. Pages left as drafts stay invisible.
 
-Keep those slugs stable once an app ships — App Store Connect links point at them.
+Keep those slugs stable once an app ships. App Store Connect links point at them.
 
 ## Adding docs
 
@@ -61,9 +61,9 @@ the header nav, `/docs` index, and sitemap pick it up automatically.
 | Concern        | Choice                                                                     |
 | -------------- | -------------------------------------------------------------------------- |
 | Framework      | Astro 7 (static; the theme toggle and mobile nav are the only client JS)   |
-| Design         | Modernist handoff, direction 2A — see [`docs/design/`](docs/design/)       |
+| Design         | Modernist handoff, direction 2A. See [`docs/design/`](docs/design/)        |
 | Styling        | Tailwind v4, Modernist tokens as CSS variables, class-based dark mode      |
-| Type           | Archivo 400–800 + JetBrains Mono 400, self-hosted latin subsets            |
+| Type           | Archivo 400 to 800 + JetBrains Mono 400, self-hosted latin subsets         |
 | Content        | Astro content collections with typed frontmatter (`src/content.config.ts`) |
 | Package mgr    | Bun (installs) · Node runs the Astro CLI                                   |
 | Versions/tasks | mise (`.mise.toml`)                                                        |
@@ -94,7 +94,8 @@ and red as a field in exactly one band.
 
 ## First edits
 
-- `src/site.config.ts` — name, tagline, description, and the `cta` every "Start a project" button
+- `src/site.config.ts`: name, tagline, description, and the `cta` every "Start a project" button
   points at (currently `mailto:go@engineignite.com`).
-- `src/data/landing.ts` — landing copy: status readout, capabilities, engagements. **The prices and
-  the "2 open" slot count are the designer's placeholders — confirm them before launch.**
+- `src/data/landing.ts`: landing copy, meaning the status readout, capabilities and engagements.
+  **The prices and the "2 open" slot count are the designer's placeholders. Confirm them before
+  launch.**

@@ -34,7 +34,7 @@ export function docSlug(entry: Doc): string {
 /**
  * Docs pages that should be built. A page ships only when its project is
  * published, the project has `docsPublished: true`, and the page is not a draft
- * — unless we are previewing drafts.
+ * This does not apply when we are previewing drafts.
  */
 export async function getDocs(project?: string): Promise<Doc[]> {
   const projects = await getProjects()

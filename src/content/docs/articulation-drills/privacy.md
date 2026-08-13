@@ -19,16 +19,17 @@ and it contains no code that transmits information anywhere.
 
 ## Information stored on your device
 
-The app saves a small number of preferences in the device's standard app storage
-— whether the full set of sounds has been unlocked by purchase, and your practice
-settings such as whether printed words appear on the cards. This data never
+The app saves a small number of preferences in the device's standard app
+storage. These are whether the full set of sounds has been unlocked by purchase,
+and your practice settings, such as whether printed words appear on the cards.
+This data never
 leaves the device, is readable only by Articulation Drills, and is removed when
 the app is deleted.
 
 ## Purchases
 
 The one-time purchase that unlocks all sound sets is handled entirely by Apple's
-In-App Purchase system. Payment details go to Apple, never to us — we do not see
+In-App Purchase system. Payment details go to Apple, never to us. We do not see
 your card, your Apple Account, or your name. Apple reports back to the app only
 whether the purchase completed. Apple's own handling of that information is
 covered by the [Apple Privacy Policy](https://www.apple.com/legal/privacy/).
@@ -42,7 +43,7 @@ device. **The app does not record audio and does not use the microphone.**
 
 Articulation Drills is made for young children to use, typically alongside a
 speech-language pathologist, teacher, or parent. Because the app collects no
-personal information from anyone, it collects none from children — there is
+personal information from anyone, it collects none from children. There is
 nothing for us to store, disclose, sell, or share. We do not knowingly collect
 personal information from children under 13, or from anyone else.
 
@@ -54,10 +55,10 @@ involved, solely to deliver the app and process the optional purchase.
 
 ## Changes to this policy
 
-If a future version of the app adds a feature that handles data — for example,
-recording a child's voice so they can hear themselves back — this policy will be
-updated to describe it before that version is released, and the change will be
-noted here with a new date.
+A future version of the app could add a feature that handles data. Recording a
+child's voice, so they can hear themselves back, is one example. If that happens,
+this policy will be updated to describe it before that version is released, and
+the change will be noted here with a new date.
 
 ## Contact
 

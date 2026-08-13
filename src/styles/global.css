@@ -47,7 +47,7 @@
   --ei-accent-ink: #ae1800; /* accent that is legible at text sizes */
   --ei-accent-live: #ff9783; /* --color-accent-400, live values on the readout */
 
-  /* Panel elevation. Offset shadows only — no blur, no radius. */
+  /* Panel elevation. Offset shadows only: no blur, no radius. */
   --ei-panel-highlight: rgba(255, 255, 255, 0.9);
   --ei-offset-10: color-mix(in srgb, var(--ei-ink) 10%, transparent);
   --ei-offset-12: color-mix(in srgb, var(--ei-ink) 12%, transparent);

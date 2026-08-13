@@ -21,7 +21,7 @@ docs      src/content/docs/<project>/<page>.md    -> /docs/<project>/<page>
 ```
 
 Support and privacy are docs pages, not a separate kind. An app's manual and its policies are
-the same sort of thing — text written about one project — and one collection means one schema,
+the same sort of thing, text written about one project, and one collection means one schema,
 one route, one sidebar and one publish rule instead of two of each. **Amended 2026-08-12:** an
 earlier revision had a third `legal` collection with its own `/projects/<slug>/<kind>` routes;
 it was folded into `docs`.
@@ -40,7 +40,7 @@ rather than existing as an empty page.
 - Production currently emits the landing page, the projects index, `404`, `robots.txt`,
   `rss.xml`, and the sitemap. Nothing else is reachable, by design.
 - Draft templates would otherwise rot untested, so CI runs `mise run build:preview` on every
-  push — a build that includes every draft — purely as a compile check.
+  push. That build includes every draft, purely as a compile check.
 - Publishing is a one-line frontmatter change plus a deploy, with no code edits.
 - Directory position carries meaning (`docs/<project>/`). That is implicit
   where frontmatter would be explicit, but it keeps the URL structure obvious from the file

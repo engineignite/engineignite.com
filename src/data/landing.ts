@@ -1,6 +1,6 @@
 /**
  * Landing page copy, from the design handoff. The numbers are the designer's
- * illustrative placeholders — confirm them before launch.
+ * illustrative placeholders. Confirm them before launch.
  */
 
 export const HERO = {
@@ -48,7 +48,7 @@ export const CAPABILITIES = [
     kicker: '04 · Hand-off',
     title: 'We staff ourselves out',
     body:
-      'Documentation, architecture walkthroughs, and help hiring and onboarding the team that takes it forward. Finishing is somebody’s job — we make sure it is a named somebody.',
+      'Documentation, architecture walkthroughs, and help hiring and onboarding the team that takes it forward. Finishing is somebody’s job. We make sure it is a named somebody.',
   },
 ] as const
 
@@ -70,7 +70,7 @@ export const ENGAGEMENTS = [
     kicker: '02 · Engine',
     price: '$28k',
     unit: '/ month',
-    meta: '6–12 weeks',
+    meta: '6 to 12 weeks',
     features: [
       'One senior builder, dedicated',
       'Weekly production releases',

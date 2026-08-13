@@ -9,14 +9,14 @@ updated: 2026-08-12
 ---
 
 Need help, found a problem, or want to suggest a word? Email
-**go@engineignite.com** — we read every message and usually reply within a few
+**go@engineignite.com**. We read every message and usually reply within a few
 days.
 
 ## About the app
 
 Articulation Drills is a listen-and-repeat flash card app for practising
 individual speech sounds. A picture appears, the child hears the word spoken by a
-child's voice, and repeats it back. It was built by speech-language pathologists
+child's voice, and repeats it back. It was designed by speech-language pathologists
 with a combined 75 years of practice in public schools and clinics.
 
 ## Common questions
@@ -24,7 +24,7 @@ with a combined 75 years of practice in public schools and clinics.
 ### How do I unlock all the sounds?
 
 Open Settings inside the app and choose the unlock option. It is a single
-one-time purchase — not a subscription — and it unlocks every sound set
+one-time purchase, not a subscription, and it unlocks every sound set
 permanently.
 
 ### I already paid, but the sounds are locked again
@@ -38,7 +38,7 @@ date of purchase and we'll help.
 
 Refunds for App Store purchases are handled by Apple, not by us. Request one at
 [reportaproblem.apple.com](https://reportaproblem.apple.com/). Tell us what went
-wrong as well — if something in the app is at fault we want to fix it.
+wrong as well. If something in the app is at fault, we want to fix it.
 
 ### Does the app need an internet connection?
 
@@ -48,7 +48,7 @@ handles.
 
 ### What data does the app collect?
 
-None at all — no accounts, no analytics, no advertising, no tracking. See the
+None at all. No accounts, no analytics, no advertising, no tracking. See the
 [privacy policy](/docs/articulation-drills/privacy) for the detail.
 
 ### Is the audio a real voice?

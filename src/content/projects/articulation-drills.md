@@ -21,8 +21,8 @@ frustration sets in.
 ## Who it is for
 
 The app is built for the gap between therapy sessions. A speech-language
-pathologist assigns the exact sound a child is working on — initial /s/, final
-/l/, /r/-blends — and the family practises it at home. It is the digital
+pathologist picks the exact sound a child is working on, such as initial /s/,
+final /l/, or /r/-blends. The family then practises it at home. It is the digital
 equivalent of the paper articulation cards therapists already photocopy, and it
 is deliberately not a replacement for therapy, an assessment tool, or a scoring
 engine.
@@ -34,8 +34,8 @@ the word. Practice is a listen-and-repeat flash card deck, shuffled fresh each
 time, ending on a celebration screen.
 
 Every picture and recording ships inside the app, so it works fully offline. The
-words are spoken by Christina Sibley, a professional child actress — children
-match a peer's voice more readily than an adult's or a synthesised one.
+words are spoken by Christina Sibley, a professional child actress. Children
+copy a voice like their own more easily than an adult voice or a computer voice.
 
 ## Price
 

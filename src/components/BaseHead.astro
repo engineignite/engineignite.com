@@ -23,7 +23,9 @@ const {
 const path = Astro.url.pathname.replace(/\/+$/, '') || '/'
 const canonical = new URL(path, Astro.site)
 const image = new URL(ogImage, Astro.site)
-const fullTitle = title === SITE.name ? `${SITE.name} — ${SITE.tagline}` : `${title} — ${SITE.name}`
+const fullTitle = title === SITE.name
+  ? `${SITE.name}: ${SITE.tagline}`
+  : `${title} | ${SITE.name}`
 
 const jsonLd = {
   '@context': 'https://schema.org',

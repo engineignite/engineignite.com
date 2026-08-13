@@ -19,7 +19,7 @@ Use Astro.
 
 - Vite-based and TypeScript-first, so it shares idiom, config, and muscle memory with the
   preferred frontend stack instead of being an isolated Go-template island.
-- Content collections give typed frontmatter with build-time validation — a project entry
+- Content collections give typed frontmatter with build-time validation. A project entry
   cannot ship missing its support email or with a malformed App Store URL.
 - Ships zero JavaScript by default, which suits a marketing/legal/docs site and keeps the
   Lighthouse budget cheap to hold. React islands remain available if a page ever needs them.
@@ -33,4 +33,4 @@ Use Astro.
 - Astro requires Node ≥ 22.12. Bun installs packages; the Astro CLI runs on Node, its
   supported runtime, and that is what CI does too.
 - If the docs section outgrows the hand-rolled layout, Astro Starlight is the in-family
-  upgrade — at the cost of a second design system to theme.
+  upgrade, at the cost of a second design system to theme.

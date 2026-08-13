@@ -7,7 +7,7 @@ export const GET: APIRoute = async (context) => {
   const projects = await getProjects()
 
   return rss({
-    title: `${SITE.name} — Projects`,
+    title: `${SITE.name} projects`,
     description: SITE.description,
     site: context.site ?? SITE.url,
     items: projects.map((project) => ({

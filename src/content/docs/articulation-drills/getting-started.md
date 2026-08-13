@@ -7,8 +7,8 @@ draft: true
 updated: 2026-08-12
 ---
 
-A session is three to five minutes. One sound set, then it stops — short and
-repeatable beats long and once.
+A session is three to five minutes. One sound set, then it stops. Short and
+repeatable works better than long and once.
 
 ## Pick a sound set
 
@@ -30,7 +30,7 @@ something the child memorises instead of the sound.
 ## Finish
 
 The deck ends on a celebration screen. Stop there. The app has no streaks, no
-timers and no way to lose — nothing that turns practice into pressure.
+timers and no way to lose. Nothing here turns practice into pressure.
 
 ## Settings worth knowing
 

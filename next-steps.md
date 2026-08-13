@@ -73,9 +73,9 @@ The landing page now carries the handoff's copy. Three things need your confirma
 
 - **Prices.** `$12k` / `$28k` / `$6k` in `src/data/landing.ts` are the designer's illustrative
   placeholders. So is `SLOTS Q3 · 2 OPEN` in the status readout.
-- **Mailbox.** Everything — CTAs, the footer, app support pages — points at
+- **Mailbox.** Everything points at one address: CTAs, the footer, and app support pages all use
   `go@engineignite.com`. Confirm it exists and is monitored.
-- **Brand mark.** Done — `ei_logo_on_light.svg` and `ei_logo_on_dark.svg` are in `public/`, the
+- **Brand mark.** Done. `ei_logo_on_light.svg` and `ei_logo_on_dark.svg` are in `public/`, the
   nav swaps them by theme, and `favicon.svg` follows the OS theme.
 
 One item to take back to the designer: the accent `#ec3013` behind `#f3f2f2` button labels
@@ -103,7 +103,7 @@ Give these URLs to App Store Connect:
 
 Do not rename a slug after an app ships. App Store Connect links point to it.
 
-No terms page unless an app needs its own — Apple's standard EULA covers a normal app, and a
+No terms page unless an app needs its own. Apple's standard EULA covers a normal app, and a
 custom one is only required for auto-renewable subscriptions. Whatever you do publish, the
 privacy text must agree with the privacy answers in App Store Connect.
 

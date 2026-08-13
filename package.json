@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "description": "Engine Ignite — project landing pages, app support/legal pages, and docs.",
+  "description": "Engine Ignite: the landing page, project pages, and per-project docs.",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",

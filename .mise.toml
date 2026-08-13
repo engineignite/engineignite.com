@@ -27,7 +27,7 @@ depends = ["install"]
 run = "node ./node_modules/.bin/astro build"
 
 [tasks."build:preview"]
-description = "Build everything including drafts/unpublished docs (noindex) — proves draft templates still compile"
+description = "Build everything, drafts included (noindex), to prove draft templates still compile"
 depends = ["install"]
 env = { PREVIEW_DRAFTS = "1" }
 run = "node ./node_modules/.bin/astro build --outDir dist-preview"

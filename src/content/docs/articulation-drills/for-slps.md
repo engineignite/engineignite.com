@@ -8,8 +8,8 @@ draft: true
 updated: 2026-08-12
 ---
 
-Articulation Drills is built for carryover between sessions — the digital
-equivalent of the articulation cards you already photocopy.
+Articulation Drills is built for carryover between sessions. It is the digital
+version of the articulation cards you already photocopy.
 
 ## What it is, and is not
 
@@ -24,9 +24,9 @@ stand behind.
 
 ## Assigning practice
 
-Tell the family the sound and the position — "beginning /r/", "ending /l/" — and
-that is exactly what they will find in the set list. No account, no code, no
-setup.
+Tell the family the sound and the position, such as "beginning /r/" or
+"ending /l/". That is exactly what they will find in the set list. No account, no
+code, no setup.
 
 ## What families need to know
 
