@@ -1,5 +1,6 @@
 ---
 import Container from '@/components/Container.astro'
+import SectionHeader from '@/components/SectionHeader.astro'
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import { getDocs, getDocumentedProjects, previewDrafts } from '@/lib/content'
 import type { GetStaticPaths } from 'astro'
@@ -25,18 +26,20 @@ const { projects, docs } = Astro.props
   noindex={previewDrafts}
 >
   <Container>
-    <h1 class="text-3xl font-semibold tracking-tight text-fg sm:text-4xl">Documentation</h1>
+    <SectionHeader kicker="Documentation" title="Manuals, per project." />
 
-    <div class="mt-10 grid gap-4 sm:grid-cols-2">
+    <div class="grid gap-4 sm:grid-cols-2">
       {projects.map((project) => {
         const first = docs.find((entry) => entry.id.startsWith(`${project.id}/`))
         return (
           <a
             href={first ? `/docs/${first.id}` : `/projects/${project.id}`}
-            class="rounded-xl border border-border bg-surface p-6 transition-colors hover:border-accent"
+            class="panel hover:border-accent group flex flex-col gap-2.5 px-7 py-[26px] transition-colors"
           >
-            <h2 class="text-lg font-semibold tracking-tight text-fg">{project.data.title}</h2>
-            <p class="mt-2 text-sm text-muted">{project.data.tagline}</p>
+            <h2 class="group-hover:text-accent text-[21px] leading-[1.2] transition-colors">
+              {project.data.title}
+            </h2>
+            <p class="text-ink/78 text-sm leading-[1.6]">{project.data.tagline}</p>
           </a>
         )
       })}

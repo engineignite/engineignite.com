@@ -1,6 +1,16 @@
 ---
-import Container from '@/components/Container.astro'
 import ProjectCard from '@/components/ProjectCard.astro'
+import SectionHeader from '@/components/SectionHeader.astro'
+import {
+  CAPABILITIES,
+  CHIPS,
+  ENGAGEMENTS,
+  ENGAGEMENTS_NOTE,
+  HERO,
+  POSTER,
+  READOUT,
+  READOUT_CAPTION,
+} from '@/data/landing'
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import { getProjects } from '@/lib/content'
 import { SITE } from '@/site.config'
@@ -8,58 +18,150 @@ import { SITE } from '@/site.config'
 const projects = await getProjects()
 ---
 
-<BaseLayout title={SITE.name}>
-  <Container>
-    <section class="py-10 sm:py-16">
-      <h1 class="max-w-3xl text-4xl font-semibold tracking-tight text-balance text-fg sm:text-6xl">
-        {SITE.tagline}
-      </h1>
-      <p class="mt-6 max-w-2xl text-lg text-muted">{SITE.description}</p>
+<BaseLayout title={SITE.name} bare>
+  <div class="mx-auto w-full max-w-[1200px] px-5 sm:px-8">
+    {/* ---------------------------------------------------------------- hero */}
+    <section class="pt-9 pb-8">
+      <div class="panel-hero grid md:grid-cols-[1fr_min(320px,32%)] lg:grid-cols-[1fr_360px]">
+        <div class="border-ink/18 border-b p-8 md:border-r md:border-b-0 lg:px-10 lg:pt-11 lg:pb-9">
+          <p class="mono-kicker mb-[22px] tracking-[0.16em] uppercase">{HERO.kicker}</p>
 
-      <div class="mt-8 flex flex-wrap gap-3">
-        <a
-          href="/projects"
-          class="rounded-md bg-accent px-4 py-2 font-medium text-accent-fg transition-colors hover:bg-accent-strong"
-        >
-          See the projects
-        </a>
-        <a
-          href="#support"
-          class="rounded-md border border-border px-4 py-2 font-medium text-fg transition-colors hover:bg-surface-muted"
-        >
-          Get support
-        </a>
+          <h1 class="mb-5 text-[40px] leading-[1.03] tracking-[-0.03em] text-balance sm:text-[52px] lg:text-[62px]">
+            {SITE.tagline}
+          </h1>
+
+          <p class="text-ink/80 mb-[30px] max-w-[44ch] text-[17px] leading-[1.5]">
+            {SITE.description}
+          </p>
+
+          <div class="flex flex-wrap gap-3">
+            <a
+              href={SITE.cta.href}
+              class="btn btn-primary btn-offset px-[22px] py-[13px] text-[15px]"
+            >
+              {SITE.cta.label}
+            </a>
+            <a
+              href={HERO.secondaryCta.href}
+              class="btn btn-secondary btn-offset-soft bg-tile px-[22px] py-[13px] text-[15px]"
+            >
+              {HERO.secondaryCta.label}
+            </a>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-3.5 p-6">
+          <div class="readout font-mono p-[18px] text-[11.5px] leading-[1.9] tracking-[0.04em]">
+            {READOUT.map((row) => (
+              <div class="flex justify-between gap-4">
+                <span class="opacity-60 uppercase">{row.label}</span>
+                <span class:list={['uppercase', row.live && 'text-accent-live']}>{row.value}</span>
+              </div>
+            ))}
+          </div>
+
+          <div class="grid grid-cols-3 gap-2.5">
+            {CHIPS.map((chip) => (
+              <div
+                class:list={[
+                  'font-mono grid h-[46px] place-items-center text-[10px] tracking-[0.1em] uppercase',
+                  chip.accent ? 'tile-accent' : 'tile',
+                ]}
+              >
+                {chip.label}
+              </div>
+            ))}
+          </div>
+
+          <p class="mono-label text-ink/50 text-[10px] tracking-[0.1em]">{READOUT_CAPTION}</p>
+        </div>
       </div>
     </section>
 
-    <section class="border-t border-border py-12" aria-labelledby="projects-heading">
-      <h2 id="projects-heading" class="text-sm font-medium tracking-wide text-muted uppercase">
-        Projects
-      </h2>
+    {/* ------------------------------------------------------- capabilities */}
+    <section class="scroll-mt-24 pt-2 pb-9" id="capabilities">
+      <SectionHeader kicker="Capabilities" title="Four modules in the rack." />
 
-      {projects.length > 0
-        ? (
-          <div class="mt-6 grid gap-4 sm:grid-cols-2">
-            {projects.map((project) => <ProjectCard project={project} />)}
-          </div>
-        )
-        : (
-          <p class="mt-6 max-w-2xl text-muted">
-            Nothing published yet. Project pages, support, and documentation will land here.
-          </p>
-        )}
+      <div class="grid gap-4 sm:grid-cols-2">
+        {CAPABILITIES.map((item) => (
+          <article class="panel flex flex-col gap-2.5 px-7 py-[26px]">
+            <p class="mono-kicker uppercase">{item.kicker}</p>
+            <h3 class="text-[21px] leading-[1.2]">{item.title}</h3>
+            <p class="text-ink/78 text-sm leading-[1.6]">{item.body}</p>
+          </article>
+        ))}
+      </div>
     </section>
 
-    <section class="border-t border-border py-12" aria-labelledby="support-heading" id="support">
-      <h2 id="support-heading" class="text-sm font-medium tracking-wide text-muted uppercase">
-        Support
-      </h2>
-      <p class="mt-6 max-w-2xl text-muted">
-        Questions, bug reports, or account and data requests for any {SITE.name} app: email{' '}
-        <a class="text-accent-strong underline underline-offset-4" href={`mailto:${SITE.email}`}>
-          {SITE.email}
-        </a>. Each app also has its own support page linked from its project page.
-      </p>
+    {/* -------------------------------------------------------- engagements */}
+    <section class="scroll-mt-24 pt-2 pb-10" id="engagements">
+      <SectionHeader kicker="Engagements" title="Pick a setting." />
+
+      <div class="grid gap-4 md:grid-cols-3">
+        {ENGAGEMENTS.map((plan) => (
+          <article class:list={['panel flex flex-col gap-3 p-6', plan.featured && 'panel-featured']}>
+            <p class="font-mono text-accent-ink flex items-center gap-2 text-[11px] tracking-[0.14em] uppercase">
+              <span
+                class:list={[
+                  'size-2 shrink-0',
+                  plan.featured ? 'bg-accent' : 'bg-ink/25',
+                ]}
+                aria-hidden="true"
+              />
+              {plan.kicker}
+            </p>
+
+            <p class="text-[32px] leading-none font-extrabold tracking-[-0.02em]">
+              {plan.price}{' '}
+              <span class="text-ink/55 text-sm font-normal tracking-normal">{plan.unit}</span>
+            </p>
+
+            <p class="font-mono text-ink/55 text-[11px]">{plan.meta}</p>
+
+            <ul class="border-ink/16 flex flex-col gap-[7px] border-t pt-3 text-[13.5px] leading-[1.5]">
+              {plan.features.map((feature) => <li>{feature}</li>)}
+            </ul>
+
+            <a
+              href={plan.cta.href}
+              class:list={[
+                'btn btn-block mt-auto',
+                plan.featured ? 'btn-primary' : 'btn-secondary bg-tile',
+              ]}
+            >
+              {plan.cta.label}
+            </a>
+          </article>
+        ))}
+      </div>
+
+      <p class="font-mono text-ink/55 mt-5 text-[11px]">{ENGAGEMENTS_NOTE}</p>
     </section>
-  </Container>
+
+    {/* ------------------------------------------------------------ projects */}
+    {projects.length > 0 && (
+      <section class="scroll-mt-24 pt-2 pb-10" id="projects">
+        <SectionHeader kicker="Projects" title="Things we shipped." />
+        <div class="grid gap-4 sm:grid-cols-2">
+          {projects.map((project) => <ProjectCard project={project} />)}
+        </div>
+      </section>
+    )}
+  </div>
+
+  {/* -------------------------------------------------------- poster close */}
+  <section class="bg-accent" id="contact">
+    <div class="mx-auto flex w-full max-w-[1200px] flex-col items-start justify-between gap-10 px-5 py-12 sm:px-8 md:flex-row md:items-end">
+      <h2 class="text-tile max-w-[16ch] text-[32px] leading-[1.02] tracking-[-0.03em] md:text-[44px]">
+        {POSTER.heading}
+      </h2>
+
+      <a
+        href={SITE.cta.href}
+        class="btn bg-tile text-accent hover:bg-panel shrink-0 px-[22px] py-3.5 text-[15px] shadow-[4px_4px_0_rgba(0,0,0,0.25)] transition-[transform,box-shadow] duration-100 active:translate-[2px] active:shadow-[2px_2px_0_rgba(0,0,0,0.25)]"
+      >
+        {SITE.cta.label}
+      </a>
+    </div>
+  </section>
 </BaseLayout>

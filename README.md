@@ -57,8 +57,10 @@ the header nav, `/docs` index, and sitemap pick it up automatically.
 
 | Concern        | Choice                                                                     |
 | -------------- | -------------------------------------------------------------------------- |
-| Framework      | Astro 7 (static, zero client JS except the theme toggle)                   |
-| Styling        | Tailwind v4, CSS-variable semantic tokens, class-based dark mode           |
+| Framework      | Astro 7 (static; the theme toggle and mobile nav are the only client JS)   |
+| Design         | Modernist handoff, direction 2A — see [`docs/design/`](docs/design/)       |
+| Styling        | Tailwind v4, Modernist tokens as CSS variables, class-based dark mode      |
+| Type           | Archivo 400–800 + JetBrains Mono 400, self-hosted latin subsets            |
 | Content        | Astro content collections with typed frontmatter (`src/content.config.ts`) |
 | Package mgr    | Bun (installs) · Node runs the Astro CLI                                   |
 | Versions/tasks | mise (`.mise.toml`)                                                        |
@@ -74,7 +76,22 @@ Design decisions and their rationale are in [`docs/adr/`](docs/adr/).
 `main` → the **Deploy** workflow builds and publishes to GitHub Pages. The custom domain
 lives in `public/CNAME`; Pages must be set to **Source: GitHub Actions** in repo settings.
 
+## Design
+
+The landing page implements the **Modernist** handoff kept in
+[`docs/design/`](docs/design/) (direction 2A, "Panel"): nav, hero panel with the
+status readout, capabilities, engagements, red poster close, footer. Its tokens drive every other
+template too, so project, legal and docs pages read as the same object.
+
+Before changing anything visual, read [`docs/design/handoff.md`](docs/design/handoff.md) and
+[`docs/adr/0003-modernist-design-system.md`](docs/adr/0003-modernist-design-system.md), which
+records the three deliberate deviations. The rules that are easy to break by accident: zero corner
+radius anywhere, flush-left everything including button labels, 2px rules rather than hairlines,
+and red as a field in exactly one band.
+
 ## First edits
 
-`src/site.config.ts` holds the site name, tagline, description, and contact address — the
-`TODO`s in that file are the copy worth replacing first.
+- `src/site.config.ts` — name, tagline, description, and the `cta` every "Start a project" button
+  points at (currently `mailto:build@engineignite.com`).
+- `src/data/landing.ts` — landing copy: status readout, capabilities, engagements. **The prices and
+  the "2 open" slot count are the designer's placeholders — confirm them before launch.**

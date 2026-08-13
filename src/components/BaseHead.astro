@@ -32,6 +32,7 @@ const jsonLd = {
   url: SITE.url,
   description: SITE.description,
   email: `mailto:${SITE.email}`,
+  logo: new URL('/engine-ignite-mark.png', SITE.url).href,
   sameAs: [SITE.social.github],
 }
 ---
@@ -43,10 +44,20 @@ const jsonLd = {
 <link rel="canonical" href={canonical} />
 {noindex && <meta name="robots" content="noindex, nofollow" />}
 
-<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin />
+<link
+  rel="preload"
+  href="/fonts/jetbrains-mono-latin.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
+
+<link rel="icon" href="/engine-ignite-mark.png" type="image/png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
-<meta name="theme-color" content="#101014" media="(prefers-color-scheme: dark)" />
-<meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#1b1a1a" media="(prefers-color-scheme: dark)" />
+<meta name="theme-color" content="#eae7e7" media="(prefers-color-scheme: light)" />
 <meta name="generator" content={Astro.generator} />
 
 <meta property="og:type" content={type} />

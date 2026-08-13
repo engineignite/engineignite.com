@@ -8,9 +8,8 @@ interface Props {
   ogImage?: string
   noindex?: boolean
   updated?: Date | undefined
-  /** Small line above the title, e.g. the project name. */
+  /** Mono line above the title, e.g. the project name. */
   eyebrow?: string
-  /** Rendered under the title. */
   lede?: string
 }
 
@@ -19,28 +18,29 @@ const { eyebrow, lede, updated, ...head } = Astro.props
 
 <BaseLayout {...head} updated={updated} type="article">
   <Container width="prose">
-    <header class="mb-10 border-b border-border pb-8">
-      {eyebrow && (
-        <p class="mb-2 text-sm font-medium tracking-wide text-accent-strong uppercase">
-          {eyebrow}
-        </p>
-      )}
-      <h1 class="text-3xl font-semibold tracking-tight text-balance text-fg sm:text-4xl">
-        {head.title}
-      </h1>
-      {lede && <p class="mt-4 text-lg text-muted">{lede}</p>}
-      {updated && (
-        <p class="mt-4 text-sm text-muted">
-          Last updated{' '}
-          <time datetime={updated.toISOString()}>
-            {updated.toLocaleDateString('en-US', { dateStyle: 'long', timeZone: 'UTC' })}
-          </time>
-        </p>
-      )}
-    </header>
+    <article class="panel px-6 py-10 sm:px-10 sm:py-12">
+      <header class="rule mb-10 border-b-2 pb-8">
+        {eyebrow && <p class="mono-kicker mb-3 uppercase">{eyebrow}</p>}
 
-    <div class="prose max-w-none">
-      <slot />
-    </div>
+        <h1 class="text-[32px] leading-[1.05] tracking-[-0.02em] text-balance sm:text-[40px]">
+          {head.title}
+        </h1>
+
+        {lede && <p class="text-ink/80 mt-4 max-w-[44ch] text-[17px] leading-[1.5]">{lede}</p>}
+
+        {updated && (
+          <p class="mono-label mt-5">
+            Updated{' '}
+            <time datetime={updated.toISOString()}>
+              {updated.toLocaleDateString('en-US', { dateStyle: 'long', timeZone: 'UTC' })}
+            </time>
+          </p>
+        )}
+      </header>
+
+      <div class="prose max-w-none">
+        <slot />
+      </div>
+    </article>
   </Container>
 </BaseLayout>

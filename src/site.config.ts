@@ -1,35 +1,35 @@
 /**
- * Site-wide constants. Edit this first — most copy on the site reads from here.
+ * Site-wide constants. Copy comes from the Engine Ignite design handoff
+ * (docs/design/handoff.md).
  */
 export const SITE = {
   name: 'Engine Ignite',
   url: 'https://engineignite.com',
   domain: 'engineignite.com',
-  /** TODO: replace with the real positioning line. Shown in the hero and in <meta>. */
-  tagline: 'Small, sharp software.',
-  /** TODO: replace. Used as the default meta description and OG description. */
+  /** The hero headline, and the tail of the home page title. */
+  tagline: 'Dreamers need engine builders.',
   description:
-    'Engine Ignite builds small, focused apps and tools. Project pages, support, and documentation live here.',
-  /** Contact address published on support pages. */
-  email: 'support@engineignite.com',
+    'Engine Ignite gets the rocket built and launched. Pre-seed founders, funded seed teams and corporate innovation groups hand us a thesis and a deadline; we return a production product they own outright.',
+  /** Where every "Start a project" CTA goes. Swap for a form or booking link later. */
+  cta: { label: 'Start a project', href: 'mailto:build@engineignite.com' },
+  /** New business. Shown in the footer. */
+  email: 'build@engineignite.com',
+  /** App support, used by project pages that do not set their own. */
+  supportEmail: 'support@engineignite.com',
+  /** Mono model label in the nav bar, per the design. */
+  model: 'Model EI—01',
   locale: 'en',
-  /** Legal entity named in terms/privacy documents. TODO: confirm. */
   legalEntity: 'Engine Ignite',
   social: {
     github: 'https://github.com/engineignite',
   },
 } as const
 
-export const NAV = [
-  { label: 'Projects', href: '/projects' },
-  { label: 'Support', href: '/#support' },
-] as const
-
-/** Accent color used for OG image gradients, as [R, G, B]. */
+/** OG image palette, taken from the Modernist tokens. */
 export const OG_COLORS = {
-  bgFrom: [16, 18, 27] as [number, number, number],
-  bgTo: [32, 24, 20] as [number, number, number],
-  accent: [235, 106, 42] as [number, number, number],
-  text: [246, 246, 248] as [number, number, number],
-  muted: [166, 168, 180] as [number, number, number],
+  bgFrom: [32, 30, 29] as [number, number, number], // --color-text
+  bgTo: [45, 43, 43] as [number, number, number], // --color-neutral-900
+  accent: [236, 48, 19] as [number, number, number], // --color-accent
+  text: [243, 242, 242] as [number, number, number], // --color-bg
+  muted: [186, 182, 182] as [number, number, number], // --color-neutral-400
 }

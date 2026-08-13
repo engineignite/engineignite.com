@@ -6,14 +6,15 @@ interface Props {
 
 const { tone = 'neutral', class: className = '' } = Astro.props
 const tones = {
-  accent: 'bg-accent-subtle text-accent-strong',
-  neutral: 'bg-surface-muted text-muted',
+  accent: 'bg-accent text-tile',
+  neutral:
+    'bg-tile text-ink/70 shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--ei-ink)_18%,transparent)]',
 }
 ---
 
 <span
   class:list={[
-    'inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium',
+    'font-mono inline-flex items-center px-2.5 py-1 text-[10px] tracking-[0.1em] uppercase',
     tones[tone],
     className,
   ]}

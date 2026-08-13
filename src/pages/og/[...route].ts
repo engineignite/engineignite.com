@@ -24,9 +24,9 @@ export const { getStaticPaths, GET } = await OGImageRoute({
     bgGradient: [OG_COLORS.bgFrom, OG_COLORS.bgTo],
     border: { color: OG_COLORS.accent, width: 16, side: 'inline-start' },
     font: {
-      title: { size: 72, weight: 'SemiBold', color: OG_COLORS.text, families: ['Inter'] },
-      description: { size: 34, lineHeight: 1.4, color: OG_COLORS.muted, families: ['Inter'] },
+      title: { size: 72, weight: 'ExtraBold', color: OG_COLORS.text, families: ['Archivo'] },
+      description: { size: 34, lineHeight: 1.4, color: OG_COLORS.muted, families: ['Archivo'] },
     },
-    fonts: ['./src/assets/fonts/Inter-Regular.ttf', './src/assets/fonts/Inter-SemiBold.ttf'],
+    fonts: ['./src/assets/fonts/Archivo-Regular.ttf', './src/assets/fonts/Archivo-ExtraBold.ttf'],
   }),
 })

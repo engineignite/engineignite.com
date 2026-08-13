@@ -6,7 +6,8 @@ interface Props {
 }
 
 const { class: className = '', width = 'default' } = Astro.props
-const max = { prose: 'max-w-3xl', wide: 'max-w-6xl', default: 'max-w-5xl' }[width]
+// The design canvas is 1200px; treat that as the content cap.
+const max = { prose: 'max-w-[46rem]', wide: 'max-w-[1200px]', default: 'max-w-[1200px]' }[width]
 ---
 
 <div class:list={['mx-auto w-full px-5 sm:px-8', max, className]}>
