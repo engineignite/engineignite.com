@@ -1,8 +1,12 @@
-# Deploys the built site to Cloudflare Pages.
+# Deploys the built site to Cloudflare Workers static assets.
 #
-# Runs only once the repository variable CF_PAGES_PROJECT is set, so it stays
-# dormant until the Cloudflare side exists. Needs two secrets:
-#   CLOUDFLARE_API_TOKEN    scoped to "Cloudflare Pages: Edit"
+# The worker name, the assets directory and the custom domain all live in
+# wrangler.toml, so this workflow only builds and calls `wrangler deploy`.
+#
+# Runs only once the repository variable CLOUDFLARE_DEPLOY is "true", so it
+# stays dormant until the Cloudflare side is ready. Needs two secrets:
+#   CLOUDFLARE_API_TOKEN    Workers Scripts: Edit, plus Zone: DNS: Edit for the
+#                           custom domain record
 #   CLOUDFLARE_ACCOUNT_ID
 name: Deploy (Cloudflare)
 
@@ -23,7 +27,7 @@ env:
 
 jobs:
   deploy:
-    if: vars.CF_PAGES_PROJECT != ''
+    if: vars.CLOUDFLARE_DEPLOY == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -41,4 +45,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=${{ vars.CF_PAGES_PROJECT }} --branch=main
+          command: deploy

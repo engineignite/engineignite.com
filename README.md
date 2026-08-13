@@ -77,15 +77,19 @@ Design decisions and their rationale are in [`docs/adr/`](docs/adr/).
 ## Deployment
 
 `main` builds and publishes automatically. Hosting is moving from GitHub Pages to **Cloudflare
-Pages** so the repository can be private, which GitHub Pages does not allow on the free plan. See
-[`docs/adr/0004-hosting-on-cloudflare-pages.md`](docs/adr/0004-hosting-on-cloudflare-pages.md).
+Workers static assets** so the repository can be private, which GitHub Pages does not allow on the
+free plan. See
+[`docs/adr/0004-hosting-on-cloudflare-workers.md`](docs/adr/0004-hosting-on-cloudflare-workers.md).
+
+`wrangler.toml` holds the worker name, the assets directory and the production hostname, so the
+domain is configuration rather than a dashboard setting.
 
 During the move both hosts run:
 
-| Workflow                | Target           | Runs when                                              |
-| ----------------------- | ---------------- | ------------------------------------------------------ |
-| `deploy.yml`            | GitHub Pages     | Always, until Cloudflare serves the domain             |
-| `deploy-cloudflare.yml` | Cloudflare Pages | Once the `CF_PAGES_PROJECT` repository variable is set |
+| Workflow                | Target             | Runs when                                                  |
+| ----------------------- | ------------------ | ---------------------------------------------------------- |
+| `deploy.yml`            | GitHub Pages       | Always, until Cloudflare serves the domain                 |
+| `deploy-cloudflare.yml` | Cloudflare Workers | Once the `CLOUDFLARE_DEPLOY` repository variable is `true` |
 
 The Cloudflare job needs the `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` secrets. The
 cutover steps, in order, are in [`next-steps.md`](next-steps.md).
