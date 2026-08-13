@@ -6,69 +6,74 @@ Delete it when you finish the list.
 ## 1. Make the repository private, without taking the site down
 
 The site is live on GitHub Pages. GitHub Pages does not serve a private repository on the free
-plan, so the repository cannot go private until Cloudflare Pages serves engineignite.com. Do these
-in order. Steps 1 to 4 change nothing that visitors see.
+plan, so the repository cannot go private until Cloudflare Pages serves engineignite.com.
 
-DNS for engineignite.com is already on Cloudflare, so the final switch is a record change inside
-one account, not a nameserver migration.
+Most of this is done. What is left needs permissions that the wrangler OAuth token does not carry.
 
-### 1. Create the API token and note the account id
+### Done
 
-Cloudflare dashboard, My Profile, API Tokens, Create Token. Use the **Cloudflare Pages: Edit**
-template, scoped to your account. Copy the token once; it is not shown again.
+- Pages project `engineignite-com` created in the Cloudflare account `8cef3d9c...`.
+- The current build is deployed and verified at
+  [engineignite-com.pages.dev](https://engineignite-com.pages.dev). All 15 routes answer 200, the
+  `_headers` rules apply, and the trailing-slash form redirects with a 308 instead of the 404 that
+  GitHub Pages returned.
+- The custom domain `engineignite.com` is attached to the project. It sits at `status=pending`
+  until DNS points at Pages.
+- The `CLOUDFLARE_ACCOUNT_ID` secret is set on the repository.
 
-The account id is on the right-hand side of any zone's overview page.
+### 1. Finish wiring the deploy workflow
 
-### 2. Tell the repository about it
+Create an API token in the Cloudflare dashboard: My Profile, API Tokens, Create Token, using the
+**Cloudflare Pages: Edit** template. The wrangler OAuth token cannot be reused, because it belongs
+to your login rather than to CI.
 
 ```bash
-gh secret set CLOUDFLARE_API_TOKEN  --repo engineignite/engineignite.com   # paste the token
-gh secret set CLOUDFLARE_ACCOUNT_ID --repo engineignite/engineignite.com   # paste the account id
+gh secret set CLOUDFLARE_API_TOKEN --repo engineignite/engineignite.com   # paste the token
 gh variable set CF_PAGES_PROJECT --repo engineignite/engineignite.com --body engineignite-com
 ```
 
-The deploy workflow stays dormant until that variable exists.
+Set both. The workflow wakes up when the variable exists, and fails without the token.
 
-### 3. Create the Pages project and deploy once
+### 2. Point the domain at Pages
 
-```bash
-wrangler login
-wrangler pages project create engineignite-com --production-branch main
-gh workflow run "Deploy (Cloudflare)" --repo engineignite/engineignite.com
-gh run watch --repo engineignite/engineignite.com
-```
+This needs DNS edit rights, which the wrangler token does not have. In the Cloudflare dashboard,
+open the Pages project, then Custom domains. `engineignite.com` is already listed as pending, and
+Cloudflare offers to update the DNS record for you.
 
-### 4. Check the build on the temporary URL
+The apex currently resolves to GitHub Pages through the Cloudflare proxy. The change replaces that
+with a proxied record pointing at `engineignite-com.pages.dev`.
 
-Open `https://engineignite-com.pages.dev`. Confirm the landing page, then these two, because they
-are the ones App Store Connect will hold:
-
-- `https://engineignite-com.pages.dev/docs/articulation-drills/support`
-- `https://engineignite-com.pages.dev/docs/articulation-drills/privacy`
-
-### 5. Point the domain at Cloudflare Pages
-
-In the Pages project, Custom domains, add `engineignite.com`. Cloudflare updates the DNS record
-itself, because the zone is in the same account.
-
-Confirm the domain now comes from Pages rather than GitHub:
+Then confirm the domain is served by Pages rather than GitHub. The `via: 1.1 varnish` and
+`x-served-by: cache-...` headers are GitHub's CDN, so they should disappear:
 
 ```bash
-curl -sI https://engineignite.com/ | grep -iE '^(server|cf-ray)'
+curl -sI https://engineignite.com/ | grep -iE '^(server|via|x-served-by)'
 curl -s -o /dev/null -w '%{http_code}\n' https://engineignite.com/docs/articulation-drills/support
 ```
 
-### 6. Retire GitHub Pages, then go private
+### 3. Retire GitHub Pages, then go private
 
-Only after step 5 answers 200:
+Only once the check above answers 200 from Pages:
 
 1. Repository Settings, Pages, unpublish the site.
 2. Delete `.github/workflows/deploy.yml` and `public/CNAME`, which exist only for GitHub Pages.
 3. Repository Settings, General, Change visibility, Make private.
 
-Note that Actions minutes are billed against the free monthly quota once the repository is
-private. A CI run takes a few minutes, so the quota is not a real constraint, but it is no longer
-unlimited.
+Actions minutes are billed against the free monthly quota once the repository is private. A CI run
+takes a few minutes, so the quota is not a real constraint, but it is no longer unlimited.
+
+## 1b. Decide about Cloudflare email obfuscation
+
+Scrape Shield's **Email Address Obfuscation** is on for the zone, so it rewrites the site's mailto
+links. On the live site every "Start a project" link points at `/cdn-cgi/l/email-protection#...`
+instead of `mailto:go@engineignite.com`, and the footer reads "[email protected]" until JavaScript
+decodes it.
+
+The CTA is the whole point of the landing page, and it currently depends on JavaScript. This is a
+zone setting, so moving to Pages does not change it.
+
+To turn it off: Cloudflare dashboard, the engineignite.com zone, Scrape Shield, Email Address
+Obfuscation, off. The trade-off is that `go@engineignite.com` becomes readable to scrapers.
 
 ## 2. Add the CI check to the ruleset
 
