@@ -121,16 +121,6 @@ const projects = await getProjects()
             <ul class="border-ink/16 flex flex-col gap-[7px] border-t pt-3 text-[13.5px] leading-[1.5]">
               {plan.features.map((feature) => <li>{feature}</li>)}
             </ul>
-
-            <a
-              href={plan.cta.href}
-              class:list={[
-                'btn btn-block mt-auto',
-                plan.featured ? 'btn-primary' : 'btn-secondary bg-tile',
-              ]}
-            >
-              {plan.cta.label}
-            </a>
           </article>
         ))}
       </div>

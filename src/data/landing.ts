@@ -57,28 +57,26 @@ export const ENGAGEMENTS = [
     kicker: '01 · Ignition',
     price: '$12k',
     unit: 'flat',
-    meta: '2 weeks · 2 people',
+    meta: '2 weeks',
     features: [
       'Written product spec',
       'Architecture decision record',
       'Clickable prototype',
       'Costed build plan',
     ],
-    cta: { label: 'Book an Ignition', href: 'mailto:build@engineignite.com?subject=Ignition' },
     featured: false,
   },
   {
     kicker: '02 · Engine',
     price: '$28k',
     unit: '/ month',
-    meta: '6–12 weeks · 2–4 builders',
+    meta: '6–12 weeks',
     features: [
       'Dedicated build crew',
       'Weekly production releases',
       'Launch ops included',
       'Full source ownership',
     ],
-    cta: { label: 'Start a project', href: 'mailto:build@engineignite.com' },
     featured: true,
   },
   {
@@ -92,7 +90,6 @@ export const ENGAGEMENTS = [
       'Escalation line',
       'Hiring support',
     ],
-    cta: { label: 'Talk about retainer', href: 'mailto:build@engineignite.com?subject=Retainer' },
     featured: false,
   },
 ] as const
