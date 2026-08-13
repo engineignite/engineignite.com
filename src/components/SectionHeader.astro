@@ -1,0 +1,16 @@
+---
+interface Props {
+  /** Mono kicker, e.g. "Capabilities". */
+  kicker: string
+  /** Section heading. */
+  title: string
+  id?: string
+}
+
+const { kicker, title, id } = Astro.props
+---
+
+<div class="mb-[18px] flex flex-wrap items-baseline gap-4" id={id}>
+  <span class="mono-kicker uppercase">{kicker}</span>
+  <h2 class="text-[32px] leading-[1.02] tracking-[-0.02em]">{title}</h2>
+</div>

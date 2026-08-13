@@ -1,0 +1,31 @@
+---
+import Container from '@/components/Container.astro'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import { SITE } from '@/site.config'
+---
+
+<BaseLayout title="Page not found" noindex>
+  <Container>
+    <div class="panel px-6 py-12 sm:px-10 sm:py-16">
+      <p class="mono-kicker mb-4 uppercase">Error 404</p>
+      <h1 class="text-[40px] leading-[1.03] tracking-[-0.03em] sm:text-[52px]">
+        Page not found.
+      </h1>
+      <p class="text-ink/80 mt-4 max-w-[44ch] text-[17px] leading-[1.5]">
+        That page does not exist. Head back to the front, or start a project.
+      </p>
+
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a
+          href="/"
+          class="btn btn-secondary btn-offset-soft bg-tile px-[22px] py-[13px] text-[15px]"
+        >
+          Back home
+        </a>
+        <a href={SITE.cta.href} class="btn btn-primary btn-offset px-[22px] py-[13px] text-[15px]">
+          {SITE.cta.label}
+        </a>
+      </div>
+    </div>
+  </Container>
+</BaseLayout>

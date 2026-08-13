@@ -1,0 +1,28 @@
+---
+import Badge from '@/components/Badge.astro'
+import { PLATFORM_LABELS, type Project, STATUS_LABELS } from '@/lib/content'
+
+interface Props {
+  project: Project
+}
+
+const { project } = Astro.props
+const { title, tagline, status, platforms, draft } = project.data
+---
+
+<a
+  href={`/projects/${project.id}`}
+  class="panel hover:border-accent group flex flex-col gap-2.5 px-7 py-[26px] transition-colors"
+>
+  <div class="flex items-start justify-between gap-3">
+    <p class="mono-kicker uppercase">{STATUS_LABELS[status]}</p>
+    {draft && <Badge>Draft</Badge>}
+  </div>
+
+  <h3 class="group-hover:text-accent text-[21px] leading-[1.2] transition-colors">{title}</h3>
+  <p class="text-ink/78 text-sm leading-[1.6]">{tagline}</p>
+
+  <p class="mono-label mt-auto pt-2 text-[10px] tracking-[0.1em]">
+    {platforms.map((platform) => PLATFORM_LABELS[platform]).join(' · ')}
+  </p>
+</a>

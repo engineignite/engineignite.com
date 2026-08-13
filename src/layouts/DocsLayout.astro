@@ -1,0 +1,56 @@
+---
+import Container from '@/components/Container.astro'
+import DocsSidebar from '@/components/DocsSidebar.astro'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import type { Doc, Project } from '@/lib/content'
+
+interface Props {
+  project: Project
+  docs: Doc[]
+  entry: Doc
+  noindex?: boolean
+}
+
+const { project, docs, entry, noindex = false } = Astro.props
+---
+
+<BaseLayout
+  title={entry.data.title}
+  description={entry.data.description ?? project.data.tagline}
+  ogImage={`/og/projects/${project.id}.png`}
+  type="article"
+  noindex={noindex}
+  updated={entry.data.updated}
+  bare
+>
+  <Container width="wide" class="py-10 sm:py-14">
+    <div class="grid gap-10 md:grid-cols-[16rem_1fr]">
+      <aside class="md:sticky md:top-10 md:self-start">
+        <DocsSidebar project={project} docs={docs} currentId={entry.id} />
+      </aside>
+
+      <article class="panel px-6 py-10 sm:px-10">
+        <nav class="mono-label mb-4" aria-label="Breadcrumb">
+          <a class="hover:text-accent transition-colors" href={`/projects/${project.id}`}>
+            {project.data.title}
+          </a>
+          <span aria-hidden="true"> / </span>
+          <span>Docs</span>
+        </nav>
+
+        <h1 class="text-[32px] leading-[1.05] tracking-[-0.02em] text-balance">
+          {entry.data.title}
+        </h1>
+        {entry.data.description && (
+          <p class="text-ink/80 mt-3 max-w-[44ch] text-[17px] leading-[1.5]">
+            {entry.data.description}
+          </p>
+        )}
+
+        <div class="prose mt-8 max-w-none">
+          <slot />
+        </div>
+      </article>
+    </div>
+  </Container>
+</BaseLayout>

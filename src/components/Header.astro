@@ -1,0 +1,99 @@
+---
+import ThemeToggle from '@/components/ThemeToggle.astro'
+import { getDocumentedProjects, getProjects } from '@/lib/content'
+import { SITE } from '@/site.config'
+
+const path = Astro.url.pathname.replace(/\/+$/, '') || '/'
+const onHome = path === '/'
+
+// Landing anchors on the home page; the same anchors point back home elsewhere.
+const prefix = onHome ? '' : '/'
+const links: { label: string; href: string }[] = [
+  { label: 'Capabilities', href: `${prefix}#capabilities` },
+  { label: 'Engagements', href: `${prefix}#engagements` },
+]
+
+if ((await getProjects()).length > 0) links.push({ label: 'Projects', href: '/projects' })
+if ((await getDocumentedProjects()).length > 0) links.push({ label: 'Docs', href: '/docs' })
+links.push({ label: 'Contact', href: SITE.cta.href })
+---
+
+<header class="rule border-b-2 bg-panel">
+  <div class="mx-auto flex w-full max-w-[1200px] flex-wrap items-center gap-x-8 gap-y-3 px-5 py-3.5 sm:px-8">
+    <a href="/" class="mr-auto flex items-center gap-3.5" aria-label={`${SITE.name} home`}>
+      <span class="tile grid size-11 place-items-center">
+        <img
+          src="/ei_logo_on_light.svg"
+          alt=""
+          width="28"
+          height="28"
+          class="size-7 dark:hidden"
+        />
+        <img
+          src="/ei_logo_on_dark.svg"
+          alt=""
+          width="28"
+          height="28"
+          class="hidden size-7 dark:block"
+        />
+      </span>
+      <span class="mono-label text-ink/60 hidden sm:block">{SITE.model}</span>
+    </a>
+
+    <nav
+      id="site-nav"
+      class="hidden w-full flex-col gap-3 pb-2 text-[13px] tracking-[0.04em] md:flex md:w-auto md:flex-row md:items-center md:gap-[26px] md:pb-0"
+      aria-label="Main"
+    >
+      {links.map((link) => (
+        <a
+          href={link.href}
+          class:list={[
+            'hover:text-accent transition-colors',
+            path === link.href || path.startsWith(`${link.href}/`) ? 'text-accent' : 'text-ink',
+          ]}
+          aria-current={path === link.href ? 'page' : undefined}
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <ThemeToggle />
+      <a href={SITE.cta.href} class="btn btn-primary">{SITE.cta.label}</a>
+      <button
+        id="nav-toggle"
+        type="button"
+        class="btn btn-secondary btn-icon md:hidden"
+        aria-label="Open navigation"
+        aria-expanded="false"
+        aria-controls="site-nav"
+      >
+        <svg
+          class="size-4"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          aria-hidden="true"
+        >
+          <path d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('nav-toggle')
+  const nav = document.getElementById('site-nav')
+
+  toggle?.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') === 'true'
+    toggle.setAttribute('aria-expanded', String(!open))
+    toggle.setAttribute('aria-label', open ? 'Open navigation' : 'Close navigation')
+    nav?.classList.toggle('hidden', open)
+    nav?.classList.toggle('flex', !open)
+  })
+</script>

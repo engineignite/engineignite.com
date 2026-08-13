@@ -1,0 +1,31 @@
+{
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: [
+    'config:recommended',
+    ':semanticCommitsDisabled', // repo uses short imperative subjects
+    'helpers:pinGitHubActionDigests',
+  ],
+  timezone: 'America/New_York',
+  schedule: ['before 6am on monday'],
+  prConcurrentLimit: 5,
+  labels: ['dependencies'],
+  lockFileMaintenance: { enabled: true },
+  packageRules: [
+    {
+      description: 'Astro and its integrations move together — one PR.',
+      groupName: 'astro',
+      matchPackageNames: ['astro', '@astrojs/**'],
+    },
+    {
+      description: 'Tailwind core and plugins move together.',
+      groupName: 'tailwind',
+      matchPackageNames: ['tailwindcss', '@tailwindcss/**'],
+    },
+    {
+      description: 'Batch low-risk dev tooling.',
+      groupName: 'dev tooling',
+      matchDepTypes: ['devDependencies'],
+      matchUpdateTypes: ['minor', 'patch'],
+    },
+  ],
+}

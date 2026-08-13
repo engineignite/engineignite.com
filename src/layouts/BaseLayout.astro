@@ -1,0 +1,56 @@
+---
+import BaseHead from '@/components/BaseHead.astro'
+import Footer from '@/components/Footer.astro'
+import Header from '@/components/Header.astro'
+import { SITE } from '@/site.config'
+import '@/styles/global.css'
+
+interface Props {
+  title: string
+  description?: string
+  ogImage?: string
+  type?: 'website' | 'article'
+  noindex?: boolean
+  updated?: Date | undefined
+  /** The landing page and docs manage their own vertical rhythm. */
+  bare?: boolean
+}
+
+const { bare = false, ...head } = Astro.props
+---
+
+<!DOCTYPE html>
+<html lang={SITE.locale}>
+  <head>
+    <BaseHead {...head} />
+    <script is:inline>
+      // Applied before first paint so the theme never flashes.
+      try {
+        const stored = localStorage.getItem('theme')
+        const dark = stored
+          ? stored === 'dark'
+          : window.matchMedia('(prefers-color-scheme: dark)').matches
+        document.documentElement.classList.toggle('dark', dark)
+      } catch {
+        // Ignore: storage blocked, fall back to the light theme.
+      }
+    </script>
+  </head>
+
+  <body class="bg-shell flex min-h-screen flex-col">
+    <a
+      href="#main"
+      class="btn btn-primary sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50"
+    >
+      Skip to content
+    </a>
+
+    <Header />
+
+    <main id="main" class:list={['flex-1', bare ? '' : 'py-10 sm:py-14']}>
+      <slot />
+    </main>
+
+    <Footer />
+  </body>
+</html>

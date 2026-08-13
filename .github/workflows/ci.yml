@@ -1,0 +1,76 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  ASTRO_TELEMETRY_DISABLED: "1"
+
+jobs:
+  check:
+    name: Format, lint, types, build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # gitleaks scans history
+
+      # Pinned to a commit SHA: third-party actions are not pinned by tag.
+      - uses: jdx/mise-action@5228313ee0372e111a38da051671ca30fc5a96db # v3
+        with:
+          version: 2026.8.5
+
+      - run: bun install --frozen-lockfile
+
+      - name: Formatting
+        run: mise run fmt-check
+
+      - name: Lint
+        run: mise run lint
+
+      - name: Types
+        run: mise run typecheck
+
+      - name: Secrets
+        run: mise run scan-secrets
+
+      - name: Build
+        run: mise run build
+
+      # Drafts and unpublished docs are excluded from the real build, so build
+      # them separately to catch template breakage before they go live.
+      - name: Build drafts
+        run: mise run build:preview
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: site
+          path: dist
+          retention-days: 7
+
+  lighthouse:
+    name: Lighthouse
+    runs-on: ubuntu-latest
+    needs: check
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/download-artifact@v8
+        with:
+          name: site
+          path: dist
+
+      - uses: treosh/lighthouse-ci-action@3e7e23fb74242897f95c0ba9cabad3d0227b9b18 # v12
+        with:
+          configPath: ./lighthouserc.json
+          uploadArtifacts: true
+          temporaryPublicStorage: false

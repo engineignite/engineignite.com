@@ -1,0 +1,21 @@
+{
+  "name": "Engine Ignite",
+  "short_name": "Engine Ignite",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#eae7e7",
+  "theme_color": "#ec3013",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+---
+import Badge from '@/components/Badge.astro'
+import Container from '@/components/Container.astro'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import { docProject, getDocs, getProjects, PLATFORM_LABELS, STATUS_LABELS } from '@/lib/content'
+import type { GetStaticPaths } from 'astro'
+import { render } from 'astro:content'
+
+export const getStaticPaths = (async () => {
+  const projects = await getProjects()
+  return projects.map((project) => ({ params: { project: project.id }, props: { project } }))
+}) satisfies GetStaticPaths
+
+const { project } = Astro.props
+const { title, tagline, description, status, platforms, appStoreUrl, siteUrl, repoUrl, draft } =
+  project.data
+
+const { Content } = await render(project)
+const docs = (await getDocs()).filter((entry) => docProject(entry) === project.id)
+
+const links = [
+  appStoreUrl && { label: 'App Store', href: appStoreUrl },
+  siteUrl && { label: 'Website', href: siteUrl },
+  repoUrl && { label: 'Source', href: repoUrl },
+].filter((link): link is { label: string; href: string } => Boolean(link))
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  ogImage={`/og/projects/${project.id}.png`}
+  noindex={draft}
+  updated={project.data.updated}
+>
+  <Container>
+    <article class="panel px-6 py-10 sm:px-10 sm:py-12">
+      <div class="flex flex-wrap items-center gap-2">
+        <Badge tone="accent">{STATUS_LABELS[status]}</Badge>
+        {platforms.map((platform) => <Badge>{PLATFORM_LABELS[platform]}</Badge>)}
+        {draft && <Badge>Unpublished draft</Badge>}
+      </div>
+
+      <h1 class="mt-5 text-[40px] leading-[1.03] tracking-[-0.03em] text-balance sm:text-[52px]">
+        {title}
+      </h1>
+      <p class="text-ink/80 mt-4 max-w-[44ch] text-[17px] leading-[1.5]">{tagline}</p>
+
+      {links.length > 0 && (
+        <div class="mt-6 flex flex-wrap gap-3">
+          {links.map((link) => (
+            <a href={link.href} class="btn btn-secondary btn-offset-soft bg-tile">
+              {link.label}
+            </a>
+          ))}
+        </div>
+      )}
+
+      <div class="prose mt-10 max-w-none">
+        <Content />
+      </div>
+
+      <section class="rule mt-12 border-t-2 pt-8" aria-labelledby="project-docs-heading">
+        <p class="mono-kicker mb-4 uppercase" id="project-docs-heading">Documentation</p>
+
+        {docs.length > 0
+          ? (
+            <ul class="flex flex-col gap-2">
+              {docs.map((entry) => (
+                <li>
+                  <a
+                    class="text-accent-ink underline underline-offset-4"
+                    href={`/docs/${entry.id}`}
+                  >
+                    {entry.data.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )
+          : <p class="text-ink/80">Nothing published yet.</p>}
+      </section>
+    </article>
+  </Container>
+</BaseLayout>

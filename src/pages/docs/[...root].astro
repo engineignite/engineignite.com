@@ -1,0 +1,48 @@
+---
+import Container from '@/components/Container.astro'
+import SectionHeader from '@/components/SectionHeader.astro'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import { getDocs, getDocumentedProjects, previewDrafts } from '@/lib/content'
+import type { GetStaticPaths } from 'astro'
+
+/**
+ * The docs index only exists once at least one project publishes docs, so
+ * `/docs` 404s until then. See `docsPublished` in src/content.config.ts.
+ */
+export const getStaticPaths = (async () => {
+  const projects = await getDocumentedProjects()
+  if (projects.length === 0) return []
+
+  const docs = await getDocs()
+  return [{ params: { root: undefined }, props: { projects, docs } }]
+}) satisfies GetStaticPaths
+
+const { projects, docs } = Astro.props
+---
+
+<BaseLayout
+  title="Documentation"
+  description="Documentation for Engine Ignite projects."
+  noindex={previewDrafts}
+>
+  <Container>
+    <SectionHeader kicker="Documentation" title="Manuals, per project." />
+
+    <div class="grid gap-4 sm:grid-cols-2">
+      {projects.map((project) => {
+        const first = docs.find((entry) => entry.id.startsWith(`${project.id}/`))
+        return (
+          <a
+            href={first ? `/docs/${first.id}` : `/projects/${project.id}`}
+            class="panel hover:border-accent group flex flex-col gap-2.5 px-7 py-[26px] transition-colors"
+          >
+            <h2 class="group-hover:text-accent text-[21px] leading-[1.2] transition-colors">
+              {project.data.title}
+            </h2>
+            <p class="text-ink/78 text-sm leading-[1.6]">{project.data.tagline}</p>
+          </a>
+        )
+      })}
+    </div>
+  </Container>
+</BaseLayout>

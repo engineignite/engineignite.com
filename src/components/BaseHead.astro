@@ -1,0 +1,83 @@
+---
+import { SITE } from '@/site.config'
+
+interface Props {
+  title: string
+  description?: string
+  /** Path to a generated OG image, e.g. `/og/site.png`. */
+  ogImage?: string
+  type?: 'website' | 'article'
+  noindex?: boolean
+  updated?: Date | undefined
+}
+
+const {
+  title,
+  description = SITE.description,
+  ogImage = '/og/site.png',
+  type = 'website',
+  noindex = false,
+  updated,
+} = Astro.props
+
+const path = Astro.url.pathname.replace(/\/+$/, '') || '/'
+const canonical = new URL(path, Astro.site)
+const image = new URL(ogImage, Astro.site)
+const fullTitle = title === SITE.name
+  ? `${SITE.name}: ${SITE.tagline}`
+  : `${title} | ${SITE.name}`
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: SITE.name,
+  url: SITE.url,
+  description: SITE.description,
+  email: `mailto:${SITE.email}`,
+  logo: new URL('/ei_logo_on_light.svg', SITE.url).href,
+  sameAs: [SITE.social.github],
+}
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin />
+<link
+  rel="preload"
+  href="/fonts/jetbrains-mono-latin.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#1b1a1a" media="(prefers-color-scheme: dark)" />
+<meta name="theme-color" content="#eae7e7" media="(prefers-color-scheme: light)" />
+<meta name="generator" content={Astro.generator} />
+
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={SITE.name} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={image} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="en_US" />
+{updated && <meta property="article:modified_time" content={updated.toISOString()} />}
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={image} />
+
+<link rel="alternate" type="application/rss+xml" title={`${SITE.name} projects`} href="/rss.xml" />
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />

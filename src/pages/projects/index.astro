@@ -1,0 +1,30 @@
+---
+import Container from '@/components/Container.astro'
+import ProjectCard from '@/components/ProjectCard.astro'
+import SectionHeader from '@/components/SectionHeader.astro'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import { getProjects } from '@/lib/content'
+import { SITE } from '@/site.config'
+
+const projects = await getProjects()
+---
+
+<BaseLayout
+  title="Projects"
+  description={`Products ${SITE.name} builds and supports, with documentation and support pages for each.`}
+>
+  <Container>
+    <SectionHeader kicker="Projects" title="Things we shipped." />
+    <p class="text-ink/80 mb-10 max-w-[44ch] text-[17px] leading-[1.5]">
+      Every project has its own page, with support contacts, terms and privacy policy.
+    </p>
+
+    {projects.length > 0
+      ? (
+        <div class="grid gap-4 sm:grid-cols-2">
+          {projects.map((project) => <ProjectCard project={project} />)}
+        </div>
+      )
+      : <p class="mono-label">No projects are published yet.</p>}
+  </Container>
+</BaseLayout>
