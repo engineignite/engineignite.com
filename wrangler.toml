@@ -1,0 +1,25 @@
+# Cloudflare Workers static assets. `wrangler deploy` uploads dist/ and, because
+# the route below is a custom domain, provisions the DNS record for it too, so
+# the hostname is configuration rather than a dashboard setting.
+#
+# Wrangler reads TOML or JSONC; there is no YAML form.
+name = "engineignite-com"
+compatibility_date = "2026-08-13"
+
+# Keeps engineignite-com.<subdomain>.workers.dev serving as well as the custom
+# domain. It is how the build gets verified before DNS moves, and afterwards it
+# is a health URL that bypasses DNS. Every page carries a canonical link to
+# engineignite.com, so the second hostname does not compete in search.
+workers_dev = true
+
+# The site is the whole worker: no script, just assets.
+[assets]
+directory = "./dist"
+# Serve dist/404.html for unknown paths. The build emits path.html rather than
+# path/index.html, so /docs/<app>/support resolves without a redirect.
+not_found_handling = "404-page"
+
+# The production hostname. Cloudflare manages the DNS record for a custom domain.
+[[routes]]
+pattern = "engineignite.com"
+custom_domain = true

@@ -5,55 +5,73 @@ Delete it when you finish the list.
 
 ## 1. Make the repository private, without taking the site down
 
-The site is live on GitHub Pages. GitHub Pages does not serve a private repository on the free
-plan, so the repository cannot go private until Cloudflare Pages serves engineignite.com.
+GitHub Pages does not serve a private repository on the free plan, so the repository cannot go
+private until Cloudflare serves engineignite.com.
 
-Most of this is done. What is left needs permissions that the wrangler OAuth token does not carry.
+Hosting is Cloudflare **Workers static assets**, not Pages, because a Pages custom domain cannot be
+declared in configuration. `wrangler.toml` holds the hostname. See ADR 0004.
 
 ### Done
 
-- Pages project `engineignite-com` created in the Cloudflare account `8cef3d9c...`.
-- The current build is deployed and verified at
-  [engineignite-com.pages.dev](https://engineignite-com.pages.dev). All 15 routes answer 200, the
-  `_headers` rules apply, and the trailing-slash form redirects with a 308 instead of the 404 that
-  GitHub Pages returned.
-- The custom domain `engineignite.com` is attached to the project. It sits at `status=pending`
-  until DNS points at Pages.
+- The worker `engineignite-com` is deployed and verified at
+  [engineignite-com.anothertest.workers.dev](https://engineignite-com.anothertest.workers.dev).
+  Every route answers 200, `_headers` applies, unknown paths give the 404 page, and the
+  trailing-slash form redirects to the canonical URL.
+- `wrangler.toml` declares the assets directory and `engineignite.com` as a custom domain route.
 - The `CLOUDFLARE_ACCOUNT_ID` secret is set on the repository.
+- The interim Pages project was created, verified, then deleted once Workers replaced it.
 
-### 1. Finish wiring the deploy workflow
+### 1. Delete the two apex DNS records
 
-Create an API token in the Cloudflare dashboard: My Profile, API Tokens, Create Token, using the
-**Cloudflare Pages: Edit** template. The wrangler OAuth token cannot be reused, because it belongs
-to your login rather than to CI.
+This is the one step that needs you, and it is what blocks the cutover. Attaching the custom domain
+fails while the old records exist:
 
-```bash
-gh secret set CLOUDFLARE_API_TOKEN --repo engineignite/engineignite.com   # paste the token
-gh variable set CF_PAGES_PROJECT --repo engineignite/engineignite.com --body engineignite-com
+```
+code 100117: Hostname 'engineignite.com' already has externally managed DNS
+records (A, CNAME, etc). Delete them first or try a different hostname.
 ```
 
-Set both. The workflow wakes up when the variable exists, and fails without the token.
+Those records point at GitHub Pages. Wrangler's OAuth token carries `zone (read)` only, so it
+cannot remove them.
 
-### 2. Point the domain at Pages
+In the Cloudflare dashboard, engineignite.com, DNS, delete the two apex `A` records
+(`172.66.40.182` and `172.66.43.74`). Then, straight away:
 
-This needs DNS edit rights, which the wrangler token does not have. In the Cloudflare dashboard,
-open the Pages project, then Custom domains. `engineignite.com` is already listed as pending, and
-Cloudflare offers to update the DNS record for you.
+```bash
+wrangler deploy
+```
 
-The apex currently resolves to GitHub Pages through the Cloudflare proxy. The change replaces that
-with a proxied record pointing at `engineignite-com.pages.dev`.
+That recreates the record as a Cloudflare-managed custom domain pointing at the worker. Run the
+two commands back to back to keep the gap short; the site is unreachable in between.
 
-Then confirm the domain is served by Pages rather than GitHub. The `via: 1.1 varnish` and
-`x-served-by: cache-...` headers are GitHub's CDN, so they should disappear:
+If you would rather I did it, create an API token with **Zone: DNS: Edit** on engineignite.com and
+I will finish the cutover.
+
+### 2. Check the domain is served by the worker
+
+The `via: 1.1 varnish` and `x-served-by: cache-...` headers are GitHub's CDN, so they should be
+gone:
 
 ```bash
 curl -sI https://engineignite.com/ | grep -iE '^(server|via|x-served-by)'
 curl -s -o /dev/null -w '%{http_code}\n' https://engineignite.com/docs/articulation-drills/support
 ```
 
-### 3. Retire GitHub Pages, then go private
+### 3. Wire the deploy workflow
 
-Only once the check above answers 200 from Pages:
+Create an API token in the Cloudflare dashboard with **Workers Scripts: Edit** and
+**Zone: DNS: Edit**, then:
+
+```bash
+gh secret set CLOUDFLARE_API_TOKEN --repo engineignite/engineignite.com   # paste the token
+gh variable set CLOUDFLARE_DEPLOY --repo engineignite/engineignite.com --body true
+```
+
+The workflow is dormant until that variable is `true`, and fails without the token, so set both.
+
+### 4. Retire GitHub Pages, then go private
+
+Only once step 2 answers 200 from the worker:
 
 1. Repository Settings, Pages, unpublish the site.
 2. Delete `.github/workflows/deploy.yml` and `public/CNAME`, which exist only for GitHub Pages.
