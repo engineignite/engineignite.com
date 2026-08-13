@@ -1,0 +1,44 @@
+# Deploys the built site to Cloudflare Pages.
+#
+# Runs only once the repository variable CF_PAGES_PROJECT is set, so it stays
+# dormant until the Cloudflare side exists. Needs two secrets:
+#   CLOUDFLARE_API_TOKEN    scoped to "Cloudflare Pages: Edit"
+#   CLOUDFLARE_ACCOUNT_ID
+name: Deploy (Cloudflare)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cloudflare-pages
+  cancel-in-progress: false
+
+env:
+  ASTRO_TELEMETRY_DISABLED: "1"
+
+jobs:
+  deploy:
+    if: vars.CF_PAGES_PROJECT != ''
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: jdx/mise-action@5228313ee0372e111a38da051671ca30fc5a96db # v3
+        with:
+          version: 2026.8.5
+
+      - run: bun install --frozen-lockfile
+
+      - name: Build
+        run: mise run build
+
+      - uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0 # v4.0.0
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=${{ vars.CF_PAGES_PROJECT }} --branch=main

@@ -69,15 +69,26 @@ the header nav, `/docs` index, and sitemap pick it up automatically.
 | Versions/tasks | mise (`.mise.toml`)                                                        |
 | Format/lint    | dprint (astro/ts/css/md/json/toml/yaml) + oxlint + `astro check`           |
 | Hooks          | prek (`.pre-commit-config.yaml`) + gitleaks                                |
-| CI/CD          | GitHub Actions → GitHub Pages, Lighthouse budget on PRs                    |
+| CI/CD          | GitHub Actions, Lighthouse budget on PRs                                   |
 | SEO            | Sitemap, RSS, robots, OG/Twitter meta, build-time OG images                |
 
 Design decisions and their rationale are in [`docs/adr/`](docs/adr/).
 
 ## Deployment
 
-`main` → the **Deploy** workflow builds and publishes to GitHub Pages. The custom domain
-lives in `public/CNAME`; Pages must be set to **Source: GitHub Actions** in repo settings.
+`main` builds and publishes automatically. Hosting is moving from GitHub Pages to **Cloudflare
+Pages** so the repository can be private, which GitHub Pages does not allow on the free plan. See
+[`docs/adr/0004-hosting-on-cloudflare-pages.md`](docs/adr/0004-hosting-on-cloudflare-pages.md).
+
+During the move both hosts run:
+
+| Workflow                | Target           | Runs when                                              |
+| ----------------------- | ---------------- | ------------------------------------------------------ |
+| `deploy.yml`            | GitHub Pages     | Always, until Cloudflare serves the domain             |
+| `deploy-cloudflare.yml` | Cloudflare Pages | Once the `CF_PAGES_PROJECT` repository variable is set |
+
+The Cloudflare job needs the `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` secrets. The
+cutover steps, in order, are in [`next-steps.md`](next-steps.md).
 
 ## Design
 

@@ -3,25 +3,72 @@
 The repo is configured and the build passes. This file lists the work that is left.
 Delete it when you finish the list.
 
-## 1. Ship the branch
+## 1. Make the repository private, without taking the site down
 
-`main` is now PR-only, so you cannot push to it directly.
+The site is live on GitHub Pages. GitHub Pages does not serve a private repository on the free
+plan, so the repository cannot go private until Cloudflare Pages serves engineignite.com. Do these
+in order. Steps 1 to 4 change nothing that visitors see.
+
+DNS for engineignite.com is already on Cloudflare, so the final switch is a record change inside
+one account, not a nameserver migration.
+
+### 1. Create the API token and note the account id
+
+Cloudflare dashboard, My Profile, API Tokens, Create Token. Use the **Cloudflare Pages: Edit**
+template, scoped to your account. Copy the token once; it is not shown again.
+
+The account id is on the right-hand side of any zone's overview page.
+
+### 2. Tell the repository about it
 
 ```bash
-git push -u origin astro-site
-gh pr create --fill
-gh pr merge --squash
+gh secret set CLOUDFLARE_API_TOKEN  --repo engineignite/engineignite.com   # paste the token
+gh secret set CLOUDFLARE_ACCOUNT_ID --repo engineignite/engineignite.com   # paste the account id
+gh variable set CF_PAGES_PROJECT --repo engineignite/engineignite.com --body engineignite-com
 ```
 
-The merge starts the **Deploy** workflow. The workflow builds the site and publishes it to
-GitHub Pages. Pages is already set to build from GitHub Actions, and `public/CNAME` keeps
-the custom domain.
+The deploy workflow stays dormant until that variable exists.
 
-Watch the first deploy:
+### 3. Create the Pages project and deploy once
 
 ```bash
-gh run watch
+wrangler login
+wrangler pages project create engineignite-com --production-branch main
+gh workflow run "Deploy (Cloudflare)" --repo engineignite/engineignite.com
+gh run watch --repo engineignite/engineignite.com
 ```
+
+### 4. Check the build on the temporary URL
+
+Open `https://engineignite-com.pages.dev`. Confirm the landing page, then these two, because they
+are the ones App Store Connect will hold:
+
+- `https://engineignite-com.pages.dev/docs/articulation-drills/support`
+- `https://engineignite-com.pages.dev/docs/articulation-drills/privacy`
+
+### 5. Point the domain at Cloudflare Pages
+
+In the Pages project, Custom domains, add `engineignite.com`. Cloudflare updates the DNS record
+itself, because the zone is in the same account.
+
+Confirm the domain now comes from Pages rather than GitHub:
+
+```bash
+curl -sI https://engineignite.com/ | grep -iE '^(server|cf-ray)'
+curl -s -o /dev/null -w '%{http_code}\n' https://engineignite.com/docs/articulation-drills/support
+```
+
+### 6. Retire GitHub Pages, then go private
+
+Only after step 5 answers 200:
+
+1. Repository Settings, Pages, unpublish the site.
+2. Delete `.github/workflows/deploy.yml` and `public/CNAME`, which exist only for GitHub Pages.
+3. Repository Settings, General, Change visibility, Make private.
+
+Note that Actions minutes are billed against the free monthly quota once the repository is
+private. A CI run takes a few minutes, so the quota is not a real constraint, but it is no longer
+unlimited.
 
 ## 2. Add the CI check to the ruleset
 
