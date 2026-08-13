@@ -6,7 +6,7 @@ updated: 2026-08-12
 draft: true
 ---
 
-Email **support@engineignite.com** and we will get back to you within two business days.
+Email **go@engineignite.com** and we will get back to you within two business days.
 
 ## Before you write
 

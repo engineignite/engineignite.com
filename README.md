@@ -92,6 +92,6 @@ and red as a field in exactly one band.
 ## First edits
 
 - `src/site.config.ts` — name, tagline, description, and the `cta` every "Start a project" button
-  points at (currently `mailto:build@engineignite.com`).
+  points at (currently `mailto:go@engineignite.com`).
 - `src/data/landing.ts` — landing copy: status readout, capabilities, engagements. **The prices and
   the "2 open" slot count are the designer's placeholders — confirm them before launch.**

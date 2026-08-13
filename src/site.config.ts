@@ -11,11 +11,10 @@ export const SITE = {
   description:
     'Engine Ignite gets the rocket built and launched. Pre-seed founders, funded seed teams and corporate innovation groups hand us a thesis and a deadline; we return a production product they own outright.',
   /** Where every "Start a project" CTA goes. Swap for a form or booking link later. */
-  cta: { label: 'Start a project', href: 'mailto:build@engineignite.com' },
-  /** New business. Shown in the footer. */
-  email: 'build@engineignite.com',
-  /** App support, used by project pages that do not set their own. */
-  supportEmail: 'support@engineignite.com',
+  cta: { label: 'Start a project', href: 'mailto:go@engineignite.com' },
+  /** The one address: new business and app support. A project can override it
+   * for its own support page with `supportEmail` in its frontmatter. */
+  email: 'go@engineignite.com',
   /** Mono model label in the nav bar, per the design. */
   model: 'Model EI—01',
   locale: 'en',

@@ -13,4 +13,4 @@ GitHub Pages, the host, as described in GitHub's privacy statement.
 
 Individual apps have their own privacy policies, linked from each project page.
 
-Questions: **support@engineignite.com**.
+Questions: **go@engineignite.com**.

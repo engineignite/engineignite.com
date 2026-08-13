@@ -28,4 +28,4 @@ TODO: How changes to these terms are communicated.
 
 ## Contact
 
-**support@engineignite.com**
+**go@engineignite.com**

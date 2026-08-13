@@ -12,7 +12,7 @@ export const HERO = {
 export const READOUT: { label: string; value: string; live?: boolean }[] = [
   { label: 'Stage', value: '0 → 1' },
   { label: 'First ship', value: '6 weeks' },
-  { label: 'Crew', value: '2–4' },
+  { label: 'Crew', value: 'Solo' },
   { label: 'Source', value: 'Client-owned', live: true },
   { label: 'Slots Q3', value: '2 open', live: true },
 ]
@@ -36,7 +36,7 @@ export const CAPABILITIES = [
     kicker: '02 · Engine build',
     title: 'Full-stack, shipped weekly',
     body:
-      'A dedicated crew of two to four senior builders takes the plan to a production product: product design, application, data model, infrastructure. Every Friday something real is in your hands.',
+      'One senior builder takes the plan to a production product: product design, application, data model, infrastructure. No handoffs between specialists, no coordination tax. Every Friday something real is in your hands.',
   },
   {
     kicker: '03 · Launch ops',
@@ -72,7 +72,7 @@ export const ENGAGEMENTS = [
     unit: '/ month',
     meta: '6–12 weeks',
     features: [
-      'Dedicated build crew',
+      'One senior builder, dedicated',
       'Weekly production releases',
       'Launch ops included',
       'Full source ownership',

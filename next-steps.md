@@ -73,8 +73,8 @@ The landing page now carries the handoff's copy. Three things need your confirma
 
 - **Prices.** `$12k` / `$28k` / `$6k` in `src/data/landing.ts` are the designer's illustrative
   placeholders. So is `SLOTS Q3 · 2 OPEN` in the status readout.
-- **Mailboxes.** CTAs point at `build@engineignite.com`; app support pages use
-  `support@engineignite.com`. Confirm both exist.
+- **Mailbox.** Everything — CTAs, the footer, app support pages — points at
+  `go@engineignite.com`. Confirm it exists and is monitored.
 - **Brand mark.** `public/engine-ignite-mark.png` is the supplied PNG, and it is also the favicon.
   Get an SVG from the designer — the PNG will not hold up at the 44px nav bezel on retina.
 

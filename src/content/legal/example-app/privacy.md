@@ -33,4 +33,4 @@ TODO: State whether the app is directed at children under 13 and how that is han
 
 ## Contact
 
-Questions about this policy: **support@engineignite.com**.
+Questions about this policy: **go@engineignite.com**.

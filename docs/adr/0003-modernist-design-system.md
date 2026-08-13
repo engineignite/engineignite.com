@@ -37,6 +37,10 @@ Adopt the Modernist system across every template, not only the landing page.
 3. **Nav carries site links.** The handoff's nav is Capabilities / Engagements / Contact. Projects
    and Docs links appear beside them once that content exists, because the site is more than the
    landing page.
+4. **Copy corrections.** The handoff's numbers are illustrative and two of them were wrong for this
+   business: Engine Ignite is one person, so the crew figures are stated as solo, and the
+   engagement cards carry no CTA while contact is closed. The address is `go@engineignite.com`,
+   not the `build@` shown in the design's footer.
 
 ## Consequences
 
