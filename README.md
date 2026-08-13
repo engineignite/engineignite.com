@@ -36,13 +36,15 @@ are exercised on every CI run by `mise run build:preview`.
 
 ## Adding a project
 
-1. Copy `src/content/projects/example-app.md` to `src/content/projects/<slug>.md` and edit the
+1. Copy `src/content/projects/articulation-drills.md` to `src/content/projects/<slug>.md` and edit the
    frontmatter. The slug is the URL: `/projects/<slug>`.
-2. Copy `src/content/legal/example-app/` to `src/content/legal/<slug>/` and write the support,
+2. Copy `src/content/legal/articulation-drills/` to `src/content/legal/<slug>/` and write the support,
    terms, and privacy pages. These are the URLs App Store Connect asks for:
    - Support URL — `https://engineignite.com/projects/<slug>/support`
    - Privacy Policy URL — `https://engineignite.com/projects/<slug>/privacy`
-   - Terms (EULA) — `https://engineignite.com/projects/<slug>/terms`
+   - Terms (EULA) — `https://engineignite.com/projects/<slug>/terms`, only if the app needs its
+     own. Apple's standard EULA covers a normal app; a custom one is required for auto-renewable
+     subscriptions. Articulation Drills therefore ships support and privacy only.
 3. Set `draft: false` on the project and on each legal page when they are ready.
 
 Keep those slugs stable once an app ships — App Store Connect links point at them.

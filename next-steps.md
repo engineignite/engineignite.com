@@ -85,9 +85,9 @@ for 15px text. The build ships the color as designed and the Lighthouse accessib
 
 ## 4. Add the first real project
 
-1. Copy `src/content/projects/example-app.md` to `src/content/projects/<slug>.md`.
+1. Copy `src/content/projects/articulation-drills.md` to `src/content/projects/<slug>.md`.
    The slug becomes the URL.
-2. Copy `src/content/legal/example-app/` to `src/content/legal/<slug>/`.
+2. Copy `src/content/legal/articulation-drills/` to `src/content/legal/<slug>/`.
 3. Write the support, terms, and privacy pages.
 4. Set `draft: false` on the project and on each legal page.
 5. Delete the example files.
