@@ -1,8 +1,6 @@
 ---
-import { getLegal, LEGAL_LABELS } from '@/lib/content'
 import { SITE } from '@/site.config'
 
-const siteLegal = await getLegal('site')
 const year = new Date().getFullYear()
 ---
 
@@ -12,11 +10,6 @@ const year = new Date().getFullYear()
 
     <nav class="flex flex-wrap items-center gap-x-6 gap-y-2" aria-label="Footer">
       <a class="hover:text-accent transition-colors" href={SITE.cta.href}>{SITE.email}</a>
-      {siteLegal.map((entry) => (
-        <a class="hover:text-accent transition-colors" href={`/legal/${entry.data.kind}`}>
-          {LEGAL_LABELS[entry.data.kind]}
-        </a>
-      ))}
       <a class="hover:text-accent transition-colors" href={SITE.social.github}>GitHub</a>
       <a class="hover:text-accent transition-colors" href="/rss.xml">RSS</a>
     </nav>

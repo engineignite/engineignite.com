@@ -1,6 +1,6 @@
 # engineignite.com
 
-The Engine Ignite site: project landing pages, App Store support/legal pages, and
+The Engine Ignite site: the landing page, project pages, and per-project docs including the
 per-project documentation. Static [Astro](https://astro.build) build, deployed to GitHub
 Pages by GitHub Actions.
 
@@ -26,8 +26,8 @@ prek install                 # format/lint on every commit
 Content is visible in `dev` long before it is public. Production only builds an entry when:
 
 - **Projects** — `draft: false` in `src/content/projects/<slug>.md`.
-- **Support / terms / privacy** — `draft: false` in `src/content/legal/<owner>/<kind>.md`.
-- **Docs** — the project has `docsPublished: true` **and** the page has `draft: false`.
+- **Docs** — the project has `docsPublished: true` **and** the page has `draft: false`. Support and
+  privacy pages are docs pages like any other, so they publish the same way.
 
 Today every sample entry is a draft, so production ships the landing page, the (empty)
 projects index, `/404`, `/robots.txt`, `/rss.xml`, and the sitemap. `/docs` does not exist
@@ -38,14 +38,15 @@ are exercised on every CI run by `mise run build:preview`.
 
 1. Copy `src/content/projects/articulation-drills.md` to `src/content/projects/<slug>.md` and edit the
    frontmatter. The slug is the URL: `/projects/<slug>`.
-2. Copy `src/content/legal/articulation-drills/` to `src/content/legal/<slug>/` and write the support,
-   terms, and privacy pages. These are the URLs App Store Connect asks for:
-   - Support URL — `https://engineignite.com/projects/<slug>/support`
-   - Privacy Policy URL — `https://engineignite.com/projects/<slug>/privacy`
-   - Terms (EULA) — `https://engineignite.com/projects/<slug>/terms`, only if the app needs its
-     own. Apple's standard EULA covers a normal app; a custom one is required for auto-renewable
-     subscriptions. Articulation Drills therefore ships support and privacy only.
-3. Set `draft: false` on the project and on each legal page when they are ready.
+2. Copy `src/content/docs/articulation-drills/` to `src/content/docs/<slug>/` and write at least
+   the support and privacy pages. These are the URLs App Store Connect asks for:
+   - Support URL — `https://engineignite.com/docs/<slug>/support`
+   - Privacy Policy URL — `https://engineignite.com/docs/<slug>/privacy`
+
+   No terms page unless the app actually needs its own: Apple's standard EULA covers a normal app,
+   and a custom one is only required for auto-renewable subscriptions.
+3. Set `draft: false` on the project, `docsPublished: true` on it, and `draft: false` on each page
+   that is ready. Pages left as drafts stay invisible.
 
 Keep those slugs stable once an app ships — App Store Connect links point at them.
 
@@ -83,7 +84,7 @@ lives in `public/CNAME`; Pages must be set to **Source: GitHub Actions** in repo
 The landing page implements the **Modernist** handoff kept in
 [`docs/design/`](docs/design/) (direction 2A, "Panel"): nav, hero panel with the
 status readout, capabilities, engagements, red poster close, footer. Its tokens drive every other
-template too, so project, legal and docs pages read as the same object.
+template too, so project and docs pages read as the same object.
 
 Before changing anything visual, read [`docs/design/handoff.md`](docs/design/handoff.md) and
 [`docs/adr/0003-modernist-design-system.md`](docs/adr/0003-modernist-design-system.md), which

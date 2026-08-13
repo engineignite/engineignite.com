@@ -2,15 +2,7 @@
 import Badge from '@/components/Badge.astro'
 import Container from '@/components/Container.astro'
 import BaseLayout from '@/layouts/BaseLayout.astro'
-import {
-  docProject,
-  getDocs,
-  getLegal,
-  getProjects,
-  LEGAL_LABELS,
-  PLATFORM_LABELS,
-  STATUS_LABELS,
-} from '@/lib/content'
+import { docProject, getDocs, getProjects, PLATFORM_LABELS, STATUS_LABELS } from '@/lib/content'
 import type { GetStaticPaths } from 'astro'
 import { render } from 'astro:content'
 
@@ -24,7 +16,6 @@ const { title, tagline, description, status, platforms, appStoreUrl, siteUrl, re
   project.data
 
 const { Content } = await render(project)
-const legal = await getLegal(project.id)
 const docs = (await getDocs()).filter((entry) => docProject(entry) === project.id)
 
 const links = [
@@ -68,33 +59,25 @@ const links = [
         <Content />
       </div>
 
-      <section class="rule mt-12 border-t-2 pt-8" aria-labelledby="project-links-heading">
-        <p class="mono-kicker mb-4 uppercase" id="project-links-heading">Support &amp; legal</p>
+      <section class="rule mt-12 border-t-2 pt-8" aria-labelledby="project-docs-heading">
+        <p class="mono-kicker mb-4 uppercase" id="project-docs-heading">Documentation</p>
 
-        {legal.length > 0
+        {docs.length > 0
           ? (
             <ul class="flex flex-col gap-2">
-              {legal.map((entry) => (
+              {docs.map((entry) => (
                 <li>
                   <a
                     class="text-accent-ink underline underline-offset-4"
-                    href={`/projects/${project.id}/${entry.data.kind}`}
+                    href={`/docs/${entry.id}`}
                   >
-                    {LEGAL_LABELS[entry.data.kind]}
+                    {entry.data.title}
                   </a>
                 </li>
               ))}
             </ul>
           )
-          : <p class="text-ink/80">No support or legal pages have been published yet.</p>}
-
-        {docs.length > 0 && (
-          <p class="mt-6">
-            <a class="text-accent-ink underline underline-offset-4" href={`/docs/${docs[0]!.id}`}>
-              Read the documentation
-            </a>
-          </p>
-        )}
+          : <p class="text-ink/80">Nothing published yet.</p>}
       </section>
     </article>
   </Container>

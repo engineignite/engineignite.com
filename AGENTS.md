@@ -1,7 +1,8 @@
 # Agent instructions
 
-Static Astro site for engineignite.com: project landing pages, App Store support/legal
-pages, and per-project docs. Deployed to GitHub Pages by GitHub Actions.
+Static Astro site for engineignite.com: the landing page, project pages, and per-project docs
+including the support and privacy pages App Store Connect requires. Deployed to GitHub Pages by
+GitHub Actions.
 
 ## Before choosing tooling
 
@@ -13,8 +14,8 @@ differ; the notable local deviations are recorded in `docs/adr/`.
 
 - **Never publish content by accident.** Production builds only non-draft entries. Do not flip
   `draft: false` or `docsPublished: true` unless the task explicitly asks for it.
-- **Slugs are contracts.** `/projects/<slug>/{support,privacy,terms}` URLs are registered in
-  App Store Connect. Renaming a project slug breaks live App Store links.
+- **Slugs are contracts.** `/docs/<slug>/{support,privacy}` URLs are registered in App Store
+  Connect. Renaming a project slug, or those two page files, breaks live App Store links.
 - **Follow the design system.** The site implements the Modernist handoff in
   `docs/design/` — read [`docs/design/handoff.md`](docs/design/handoff.md) before changing anything
   visual, and see `docs/adr/0003-modernist-design-system.md` for what we deviated from and why.
@@ -36,8 +37,8 @@ differ; the notable local deviations are recorded in `docs/adr/`.
 ```
 src/content.config.ts    typed frontmatter schemas for all three collections
 src/content/projects/    one file per project      -> /projects/<slug>
-src/content/legal/       <owner>/<kind>.md         -> /projects/<owner>/<kind>, /legal/<kind>
 src/content/docs/        <project>/<page>.md       -> /docs/<project>/<page>
+                         includes each app's support and privacy pages
 src/lib/content.ts       draft gating + sorting helpers — all content access goes through here
 src/site.config.ts       site name, tagline, description, CTA target, OG colors
 src/data/landing.ts      landing page copy: readout, capabilities, engagements, poster

@@ -1,9 +1,11 @@
 ---
 title: Privacy Policy
 description: What Articulation Drills collects, which is nothing.
-kind: privacy
-updated: 2026-08-12
+project: articulation-drills
+section: Support
+order: 40
 draft: true
+updated: 2026-08-12
 ---
 
 Articulation Drills collects nothing. There are no accounts, no analytics, no

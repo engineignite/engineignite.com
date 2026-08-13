@@ -1,9 +1,11 @@
 ---
 title: Support
 description: Help, common questions and contact for Articulation Drills.
-kind: support
-updated: 2026-08-12
+project: articulation-drills
+section: Support
+order: 30
 draft: true
+updated: 2026-08-12
 ---
 
 Need help, found a problem, or want to suggest a word? Email
@@ -47,7 +49,7 @@ handles.
 ### What data does the app collect?
 
 None at all — no accounts, no analytics, no advertising, no tracking. See the
-[privacy policy](/projects/articulation-drills/privacy) for the detail.
+[privacy policy](/docs/articulation-drills/privacy) for the detail.
 
 ### Is the audio a real voice?
 

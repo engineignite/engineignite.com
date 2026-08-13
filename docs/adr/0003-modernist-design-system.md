@@ -8,7 +8,7 @@
 A design handoff arrived for the landing page (vendored at `docs/design/`):
 direction 2A, "Panel". It is high fidelity — colors, type sizes, spacing and shadows are final —
 and it repositions the site. Engine Ignite is a zero-to-one build shop, not an app umbrella. The
-site still has to carry project pages, App Store support/legal pages and docs, none of which the
+site still has to carry project pages and per-project docs, none of which the
 handoff covers.
 
 ## Decision
@@ -21,7 +21,7 @@ Adopt the Modernist system across every template, not only the landing page.
   `.panel-hero`, `.tile` and `.readout` component classes. Offset shadows only: no blur, no radius.
 - **Type** is Archivo 400–800, self-hosted as one variable woff2, with JetBrains Mono 400 for the
   technical labels. Both are latin-subset and preloaded.
-- **Inner pages** (project, legal, docs, 404) place their content in a raised panel under the same
+- **Inner pages** (project, docs, 404) place their content in a raised panel under the same
   nav and footer, so they read as the same object as the landing page.
 - **Landing copy** lives in `src/data/landing.ts`, typed and separate from markup.
 

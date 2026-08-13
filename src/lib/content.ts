@@ -7,7 +7,6 @@ import { type CollectionEntry, getCollection } from 'astro:content'
 export const previewDrafts = import.meta.env.DEV || process.env['PREVIEW_DRAFTS'] === '1'
 
 export type Project = CollectionEntry<'projects'>
-export type Legal = CollectionEntry<'legal'>
 export type Doc = CollectionEntry<'docs'>
 
 /** Projects that should be built, sorted by `order` then title. */
@@ -20,17 +19,6 @@ export async function getProjects(): Promise<Project[]> {
 
 export async function getProject(id: string): Promise<Project | undefined> {
   return (await getProjects()).find((project) => project.id === id)
-}
-
-/** `<owner>/<kind>` -> owner, where owner is a project slug or the string `site`. */
-export function legalOwner(entry: Legal): string {
-  return entry.id.split('/')[0] ?? ''
-}
-
-export async function getLegal(owner?: string): Promise<Legal[]> {
-  const entries = await getCollection('legal', ({ data }) => previewDrafts || !data.draft)
-  const scoped = owner ? entries.filter((entry) => legalOwner(entry) === owner) : entries
-  return scoped.toSorted((a, b) => a.data.kind.localeCompare(b.data.kind))
 }
 
 /** `<project>/<...slug>` -> project slug. */
@@ -95,10 +83,4 @@ export const PLATFORM_LABELS: Record<Project['data']['platforms'][number], strin
   visionos: 'visionOS',
   web: 'Web',
   cli: 'CLI',
-}
-
-export const LEGAL_LABELS: Record<Legal['data']['kind'], string> = {
-  terms: 'Terms of Service',
-  privacy: 'Privacy Policy',
-  support: 'Support',
 }

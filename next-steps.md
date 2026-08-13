@@ -87,9 +87,10 @@ for 15px text. The build ships the color as designed and the Lighthouse accessib
 
 1. Copy `src/content/projects/articulation-drills.md` to `src/content/projects/<slug>.md`.
    The slug becomes the URL.
-2. Copy `src/content/legal/articulation-drills/` to `src/content/legal/<slug>/`.
+2. Copy `src/content/docs/articulation-drills/` to `src/content/docs/<slug>/`.
 3. Write the support, terms, and privacy pages.
-4. Set `draft: false` on the project and on each legal page.
+4. Set `draft: false` on the project, `docsPublished: true` on it, and `draft: false` on each
+   page that is ready.
 5. Delete the example files.
 
 Give these URLs to App Store Connect:
@@ -102,8 +103,9 @@ Give these URLs to App Store Connect:
 
 Do not rename a slug after an app ships. App Store Connect links point to it.
 
-**The legal files are templates, not legal advice.** Read them and correct them before you
-publish them. The privacy text must agree with the privacy answers in App Store Connect.
+No terms page unless an app needs its own — Apple's standard EULA covers a normal app, and a
+custom one is only required for auto-renewable subscriptions. Whatever you do publish, the
+privacy text must agree with the privacy answers in App Store Connect.
 
 ## 5. Publish docs when you have content
 
