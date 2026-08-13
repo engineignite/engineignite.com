@@ -4,7 +4,6 @@ description: What Articulation Drills collects, which is nothing.
 project: articulation-drills
 section: Support
 order: 40
-draft: true
 updated: 2026-08-12
 ---
 

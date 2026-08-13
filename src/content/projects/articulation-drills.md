@@ -5,8 +5,7 @@ description: A listen-and-repeat flash card app for practising individual speech
 status: beta
 platforms: [ios]
 order: 10
-draft: true
-docsPublished: false
+docsPublished: true
 updated: 2026-08-12
 # Fill in once the listing is live:
 # appStoreUrl: https://apps.apple.com/app/id0000000000

@@ -4,7 +4,6 @@ description: How to assign Articulation Drills as home practice.
 project: articulation-drills
 section: Guides
 order: 20
-draft: true
 updated: 2026-08-12
 ---
 

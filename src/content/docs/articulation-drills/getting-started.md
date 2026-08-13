@@ -3,7 +3,6 @@ title: Getting started
 description: What a practice session looks like, start to finish.
 project: articulation-drills
 order: 10
-draft: true
 updated: 2026-08-12
 ---
 

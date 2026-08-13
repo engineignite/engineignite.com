@@ -4,7 +4,6 @@ description: Help, common questions and contact for Articulation Drills.
 project: articulation-drills
 section: Support
 order: 30
-draft: true
 updated: 2026-08-12
 ---
 
