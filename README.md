@@ -1,8 +1,8 @@
 # engineignite.com
 
-The Engine Ignite site: the landing page, project pages, and per-project docs including the
-per-project documentation. Static [Astro](https://astro.build) build, deployed to GitHub
-Pages by GitHub Actions.
+The Engine Ignite site: the landing page, project pages, and per-project docs, including the
+support and privacy pages App Store Connect requires. Static [Astro](https://astro.build) build,
+deployed to Cloudflare Workers static assets.
 
 ## Quick start
 
@@ -93,6 +93,19 @@ During the move both hosts run:
 
 The Cloudflare job needs the `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` secrets. The
 cutover steps, in order, are in [`next-steps.md`](next-steps.md).
+
+### Deploying by hand
+
+```bash
+mise run build   # produces dist/
+wrangler deploy  # uploads dist/ per wrangler.toml
+```
+
+Always build first. `wrangler deploy` uploads whatever is in `dist/` and does not build, so
+skipping the first command ships the previous build, or fails if `dist/` is absent.
+
+`wrangler deploy` also reconciles the custom domain in `wrangler.toml`, so the token it uses needs
+**Zone: DNS: Edit** as well as **Workers Scripts: Edit**.
 
 ## Design
 
